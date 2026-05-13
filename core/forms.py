@@ -75,3 +75,25 @@ class ApplicationForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
             'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
+
+
+class ApplicationDocumentForm(forms.ModelForm):
+    class Meta:
+        model = ApplicationDocument
+        fields = ['doc_type', 'file']
+        widgets = {
+            'doc_type': forms.Select(attrs={'class': 'form-control'}),
+            'file': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class ExamResultForm(forms.ModelForm):
+    class Meta:
+        model = ExamResult
+        fields = ['application', 'exam', 'score', 'notes']
+        widgets = {
+            'application': forms.Select(attrs={'class': 'form-control'}),
+            'exam': forms.Select(attrs={'class': 'form-control'}),
+            'score': forms.NumberInput(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
