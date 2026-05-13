@@ -173,3 +173,20 @@ class Exam(models.Model):
         verbose_name = 'Экзамен'
         verbose_name_plural = 'Экзамены'
         ordering = ['date']
+
+
+class ExamResult(models.Model):
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='exam_results', verbose_name='Заявка')
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='results', verbose_name='Экзамен')
+    score = models.PositiveIntegerField(verbose_name='Балл')
+    notes = models.TextField(blank=True, verbose_name='Примечания')
+    recorded_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата записи')
+    recorded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='recorded_results', verbose_name='Кто записал')
+
+    def __str__(self):
+        return f"{self.exam.name}: {self.score}"
+
+    class Meta:
+        verbose_name = 'Результат экзамена'
+        verbose_name_plural = 'Результаты экзаменов'
+        unique_together = ['application', 'exam']
