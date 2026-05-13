@@ -127,3 +127,26 @@ class Application(models.Model):
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
         ordering = ['-created_at']
+
+
+class ApplicationDocument(models.Model):
+    DOC_TYPE_CHOICES = [
+        ('passport', 'Паспорт'),
+        ('diploma', 'Диплом/Аттестат'),
+        ('photo', 'Фотография'),
+        ('certificate', 'Сертификат/Документ'),
+        ('other', 'Другое'),
+    ]
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='documents', verbose_name='Заявка')
+    doc_type = models.CharField(max_length=20, choices=DOC_TYPE_CHOICES, verbose_name='Тип документа')
+    file = models.FileField(upload_to='applications/%Y/%m/', verbose_name='Файл')
+    uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')
+    is_verified = models.BooleanField(default=False, verbose_name='Проверен')
+
+    def __str__(self):
+        return f"{self.get_doc_type_display()} для заявки #{self.application.id}"
+
+    class Meta:
+        verbose_name = 'Документ заявки'
+        verbose_name_plural = 'Документы заявок'
+        ordering = ['-uploaded_at']
