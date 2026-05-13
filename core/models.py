@@ -50,3 +50,34 @@ class Department(models.Model):
         verbose_name = 'Кафедра'
         verbose_name_plural = 'Кафедры'
         ordering = ['name']
+
+
+class StudyProgram(models.Model):
+    LEVEL_CHOICES = [
+        ('bachelor', 'Бакалавриат'),
+        ('master', 'Магистратура'),
+        ('specialist', 'Специалитет'),
+        ('postgraduate', 'Аспирантура'),
+    ]
+    FORM_CHOICES = [
+        ('full_time', 'Очная'),
+        ('part_time', 'Очно-заочная'),
+        ('distance', 'Заочная'),
+    ]
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='programs', verbose_name='Кафедра')
+    name = models.CharField(max_length=200, verbose_name='Название направления')
+    code = models.CharField(max_length=20, verbose_name='Код направления')
+    level = models.CharField(max_length=20, choices=LEVEL_CHOICES, verbose_name='Уровень образования')
+    form = models.CharField(max_length=20, choices=FORM_CHOICES, verbose_name='Форма обучения')
+    budget_places = models.PositiveIntegerField(default=0, verbose_name='Бюджетные места')
+    paid_places = models.PositiveIntegerField(default=0, verbose_name='Платные места')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    is_active = models.BooleanField(default=True, verbose_name='Активно')
+
+    def __str__(self):
+        return f"{self.code} {self.name}"
+
+    class Meta:
+        verbose_name = 'Направление обучения'
+        verbose_name_plural = 'Направления обучения'
+        ordering = ['code']
