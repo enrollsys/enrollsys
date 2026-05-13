@@ -102,3 +102,28 @@ class AdmissionCampaign(models.Model):
         verbose_name = 'Приемная кампания'
         verbose_name_plural = 'Приемные кампании'
         ordering = ['-year']
+
+
+class Application(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Черновик'),
+        ('submitted', 'Подана'),
+        ('under_review', 'На рассмотрении'),
+        ('accepted', 'Принята'),
+        ('rejected', 'Отклонена'),
+    ]
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE, related_name='applications', verbose_name='Абитуриент')
+    campaign = models.ForeignKey(AdmissionCampaign, on_delete=models.CASCADE, related_name='applications', verbose_name='Кампания')
+    program = models.ForeignKey(StudyProgram, on_delete=models.CASCADE, related_name='applications', verbose_name='Направление')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft', verbose_name='Статус')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    comment = models.TextField(blank=True, verbose_name='Комментарий')
+
+    def __str__(self):
+        return f"Заявка #{self.id} от {self.applicant.username}"
+
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+        ordering = ['-created_at']
