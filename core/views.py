@@ -125,3 +125,71 @@ def application_detail(request, pk):
     application = get_object_or_404(Application, pk=pk, applicant=request.user)
     documents = application.documents.all()
     return render(request, 'core/application_detail.html', {'application': application, 'documents': documents})
+
+
+@login_required
+def methodist_dashboard(request):
+    if not hasattr(request.user, 'profile') or request.user.profile.role != 'methodist':
+        return redirect('home')
+    applications = Application.objects.filter(status='submitted').select_related('applicant', 'program')
+    campaigns = AdmissionCampaign.objects.all()
+    return render(request, 'core/methodist_dashboard.html', {'applications': applications, 'campaigns': campaigns})
+
+
+@login_required
+def admin_dashboard(request):
+    if not hasattr(request.user, 'profile') or request.user.profile.role != 'admin':
+        return redirect('home')
+    stats = {
+        'total_users': User.objects.count(),
+        'total_applications': Application.objects.count(),
+        'active_programs': StudyProgram.objects.filter(is_active=True).count(),
+        'active_campaigns': AdmissionCampaign.objects.filter(status='active').count(),
+    }
+    return render(request, 'core/admin_dashboard.html', {'stats': stats})
+
+
+@login_required
+def application_review(request, pk):
+    if not hasattr(request.user, 'profile') or request.user.profile.role not in ['methodist', 'admin']:
+        return redirect('home')
+    application = get_object_or_404(Application, pk=pk)
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()
+            return redirect('methodist_dashboard')
+    else:
+        form = ApplicationForm(instance=application)
+    return render(request, 'core/application_review.html', {'form': form, 'application': application})
+
+
+@login_required
+def document_upload(request, application_id):
+    application = get_object_or_404(Application, pk=application_id, applicant=request.user)
+    if request.method == 'POST':
+        form = ApplicationDocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            doc = form.save(commit=False)
+            doc.application = application
+            doc.save()
+            return redirect('application_detail', pk=application_id)
+    else:
+        form = ApplicationDocumentForm()
+    return render(request, 'core/document_upload.html', {'form': form, 'application': application})
+
+
+@login_required
+def exam_result_create(request):
+    if not hasattr(request.user, 'profile') or request.user.profile.role not in ['methodist', 'admin']:
+        return redirect('home')
+    if request.method == 'POST':
+        form = ExamResultForm(request.POST)
+        if form.is_valid():
+            result = form.save(commit=False)
+            result.recorded_by = request.user
+            result.save()
+            return redirect('methodist_dashboard')
+    else:
+        form = ExamResultForm()
+    return render(request, 'core/exam_result_form.html', {'form': form})
