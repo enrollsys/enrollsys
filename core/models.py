@@ -150,3 +150,26 @@ class ApplicationDocument(models.Model):
         verbose_name = 'Документ заявки'
         verbose_name_plural = 'Документы заявок'
         ordering = ['-uploaded_at']
+
+
+class Exam(models.Model):
+    TYPE_CHOICES = [
+        ('written', 'Письменный'),
+        ('oral', 'Устный'),
+        ('combined', 'Комбинированный'),
+    ]
+    program = models.ForeignKey(StudyProgram, on_delete=models.CASCADE, related_name='exams', verbose_name='Направление')
+    name = models.CharField(max_length=200, verbose_name='Название экзамена')
+    exam_type = models.CharField(max_length=20, choices=TYPE_CHOICES, verbose_name='Тип экзамена')
+    date = models.DateField(verbose_name='Дата проведения')
+    location = models.CharField(max_length=200, blank=True, verbose_name='Место проведения')
+    max_score = models.PositiveIntegerField(default=100, verbose_name='Максимальный балл')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Экзамен'
+        verbose_name_plural = 'Экзамены'
+        ordering = ['date']
