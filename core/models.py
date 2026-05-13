@@ -19,3 +19,18 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
+
+
+class Faculty(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название факультета')
+    short_name = models.CharField(max_length=50, blank=True, verbose_name='Краткое название')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Факультет'
+        verbose_name_plural = 'Факультеты'
+        ordering = ['name']
