@@ -39,3 +39,18 @@ def news_detail(request, slug):
     article = get_object_or_404(News, slug=slug, is_published=True)
     return render(request, 'core/news_detail.html', {'article': article})
 
+
+def program_list(request):
+    programs = StudyProgram.objects.filter(is_active=True).select_related('department__faculty')
+    return render(request, 'core/program_list.html', {'programs': programs})
+
+
+def program_detail(request, pk):
+    program = get_object_or_404(StudyProgram, pk=pk, is_active=True)
+    exams = program.exams.filter(is_active=True)
+    return render(request, 'core/program_detail.html', {'program': program, 'exams': exams})
+
+
+def faculty_list(request):
+    faculties = Faculty.objects.filter(is_active=True).prefetch_related('departments')
+    return render(request, 'core/faculty_list.html', {'faculties': faculties})
