@@ -54,3 +54,18 @@ def program_detail(request, pk):
 def faculty_list(request):
     faculties = Faculty.objects.filter(is_active=True).prefetch_related('departments')
     return render(request, 'core/faculty_list.html', {'faculties': faculties})
+
+
+def faq_list(request):
+    faqs = FAQ.objects.filter(is_active=True).order_by('order', 'id')
+    return render(request, 'core/faq_list.html', {'faqs': faqs})
+
+
+def contact_list(request):
+    contacts = Contact.objects.filter(is_active=True)
+    return render(request, 'core/contact_list.html', {'contacts': contacts})
+
+
+def campaign_list(request):
+    campaigns = AdmissionCampaign.objects.filter(status='active').order_by('-year')
+    return render(request, 'core/campaign_list.html', {'campaigns': campaigns})
