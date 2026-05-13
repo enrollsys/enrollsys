@@ -98,3 +98,30 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+
+@login_required
+def applicant_dashboard(request):
+    applications = Application.objects.filter(applicant=request.user).select_related('program', 'campaign')
+    return render(request, 'core/applicant_dashboard.html', {'applications': applications})
+
+
+@login_required
+def application_create(request):
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            app = form.save(commit=False)
+            app.applicant = request.user
+            app.save()
+            return redirect('applicant_dashboard')
+    else:
+        form = ApplicationForm()
+    return render(request, 'core/application_form.html', {'form': form})
+
+
+@login_required
+def application_detail(request, pk):
+    application = get_object_or_404(Application, pk=pk, applicant=request.user)
+    documents = application.documents.all()
+    return render(request, 'core/application_detail.html', {'application': application, 'documents': documents})
