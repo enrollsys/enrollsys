@@ -81,3 +81,24 @@ class StudyProgram(models.Model):
         verbose_name = 'Направление обучения'
         verbose_name_plural = 'Направления обучения'
         ordering = ['code']
+
+
+class AdmissionCampaign(models.Model):
+    STATUS_CHOICES = [
+        ('planned', 'Запланирована'),
+        ('active', 'Активна'),
+        ('closed', 'Закрыта'),
+    ]
+    year = models.PositiveIntegerField(verbose_name='Учебный год')
+    start_date = models.DateField(verbose_name='Дата начала')
+    end_date = models.DateField(verbose_name='Дата окончания')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='planned', verbose_name='Статус')
+    description = models.TextField(blank=True, verbose_name='Описание')
+
+    def __str__(self):
+        return f"Приемная кампания {self.year}"
+
+    class Meta:
+        verbose_name = 'Приемная кампания'
+        verbose_name_plural = 'Приемные кампании'
+        ordering = ['-year']
