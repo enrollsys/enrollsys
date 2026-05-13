@@ -128,7 +128,6 @@ class Application(models.Model):
         verbose_name_plural = 'Заявки'
         ordering = ['-created_at']
 
-
 class ApplicationDocument(models.Model):
     DOC_TYPE_CHOICES = [
         ('passport', 'Паспорт'),
@@ -209,3 +208,56 @@ class News(models.Model):
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
         ordering = ['-created_at']
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=500, verbose_name='Вопрос')
+    answer = models.TextField(verbose_name='Ответ')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        verbose_name = 'FAQ'
+        verbose_name_plural = 'FAQ'
+        ordering = ['order', 'id']
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Имя контакта')
+    email = models.EmailField(verbose_name='Email')
+    phone = models.CharField(max_length=20, blank=True, verbose_name='Телефон')
+    address = models.TextField(blank=True, verbose_name='Адрес')
+    office_hours = models.CharField(max_length=200, blank=True, verbose_name='Часы работы')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+
+
+class DocumentTemplate(models.Model):
+    FORMAT_CHOICES = [
+        ('docx', 'Microsoft Word'),
+        ('xlsx', 'Microsoft Excel'),
+        ('pdf', 'PDF'),
+    ]
+    name = models.CharField(max_length=200, verbose_name='Название шаблона')
+    file = models.FileField(upload_to='templates/', verbose_name='Файл шаблона')
+    doc_format = models.CharField(max_length=10, choices=FORMAT_CHOICES, verbose_name='Формат')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Шаблон документа'
+        verbose_name_plural = 'Шаблоны документов'
+        ordering = ['name']
