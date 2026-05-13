@@ -47,3 +47,31 @@ class DepartmentForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+
+class StudyProgramForm(forms.ModelForm):
+    class Meta:
+        model = StudyProgram
+        fields = ['department', 'name', 'code', 'level', 'form', 'budget_places', 'paid_places', 'description', 'is_active']
+        widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'code': forms.TextInput(attrs={'class': 'form-control'}),
+            'level': forms.Select(attrs={'class': 'form-control'}),
+            'form': forms.Select(attrs={'class': 'form-control'}),
+            'budget_places': forms.NumberInput(attrs={'class': 'form-control'}),
+            'paid_places': forms.NumberInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['program', 'status', 'comment']
+        widgets = {
+            'program': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
