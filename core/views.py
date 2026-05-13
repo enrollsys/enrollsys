@@ -69,3 +69,32 @@ def contact_list(request):
 def campaign_list(request):
     campaigns = AdmissionCampaign.objects.filter(status='active').order_by('-year')
     return render(request, 'core/campaign_list.html', {'campaigns': campaigns})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            UserProfile.objects.create(user=user, role='applicant')
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'core/register.html', {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+    return render(request, 'core/login.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
