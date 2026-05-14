@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="page-title">Направления обучения</h1>
+            <a class="btn" href="{% url 'register' %}">Записаться</a>
+        </div>
+        <div class="card-grid">
+            {% for program in programs %}
+                <article class="card">
+                    <span class="tag">{{ program.code }}</span>
+                    <h3>{{ program.name }}</h3>
+                    <p class="muted">{{ program.department.faculty.name }} · {{ program.department.name }}</p>
+                    <p>{{ program.get_level_display }} · {{ program.get_form_display }}</p>
+                    <p>Бюджетные места: {{ program.budget_places }} · Платные места: {{ program.paid_places }}</p>
+                    <a class="btn secondary" href="{% url 'program_detail' program.pk %}">Подробнее</a>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
