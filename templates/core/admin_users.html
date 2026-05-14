@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Пользователи</h1></div>
+    <div class="table-card"><table><thead><tr><th>Логин</th><th>ФИО</th><th>Email</th><th>Роль</th><th>Активен</th></tr></thead><tbody>
+    {% for item in users %}
+        <tr><td>{{ item.username }}</td><td>{{ item.get_full_name|default:"-" }}</td><td>{{ item.email }}</td><td>{{ item.profile.get_role_display|default:"-" }}</td><td>{{ item.is_active|yesno:"Да,Нет" }}</td></tr>
+    {% empty %}
+        <tr><td colspan="5">Пользователей нет.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Приемные кампании</h1></div>
+    <div class="table-card"><table><thead><tr><th>Год</th><th>Начало</th><th>Окончание</th><th>Статус</th><th>Описание</th></tr></thead><tbody>
+    {% for campaign in campaigns %}
+        <tr><td>{{ campaign.year }}</td><td>{{ campaign.start_date|date:"d.m.Y" }}</td><td>{{ campaign.end_date|date:"d.m.Y" }}</td><td><span class="status {{ campaign.status }}">{{ campaign.get_status_display }}</span></td><td>{{ campaign.description|default:"-" }}</td></tr>
+    {% empty %}
+        <tr><td colspan="5">Кампаний нет.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}

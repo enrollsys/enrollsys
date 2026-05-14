@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Направления</h1></div>
+    <div class="table-card"><table><thead><tr><th>Код</th><th>Название</th><th>Факультет</th><th>Форма</th><th>Места</th><th>Активно</th></tr></thead><tbody>
+    {% for program in programs %}
+        <tr><td>{{ program.code }}</td><td>{{ program.name }}</td><td>{{ program.department.faculty.name }}</td><td>{{ program.get_form_display }}</td><td>{{ program.budget_places }} / {{ program.paid_places }}</td><td>{{ program.is_active|yesno:"Да,Нет" }}</td></tr>
+    {% empty %}
+        <tr><td colspan="6">Направлений нет.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}
