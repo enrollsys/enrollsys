@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="panel">
+            <h1 class="page-title">Новая заявка</h1>
+            <p class="muted">Выберите приемную кампанию и направление обучения.</p>
+            <form method="post">
+                {% include 'core/partials/form.html' %}
+                <div class="actions section compact"><button type="submit">Отправить заявку</button><a class="btn ghost" href="{% url 'program_list' %}">К направлениям</a></div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
