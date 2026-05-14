@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header"><h1 class="page-title">Контакты</h1></div>
+        <div class="card-grid">
+            {% for contact in contacts %}
+                <article class="card">
+                    <h3>{{ contact.name }}</h3>
+                    <p><strong>Email:</strong> {{ contact.email }}</p>
+                    <p><strong>Телефон:</strong> {{ contact.phone|default:"Уточняется" }}</p>
+                    <p><strong>Адрес:</strong> {{ contact.address|default:"Москва" }}</p>
+                    <p><strong>Часы работы:</strong> {{ contact.office_hours|default:"Пн-Пт 10:00-18:00" }}</p>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

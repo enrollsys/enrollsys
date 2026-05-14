@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header"><h1 class="page-title">Вопросы и ответы</h1></div>
+        <div class="panel">
+            {% for item in faqs %}
+                <div class="accordion-item" data-accordion-item>
+                    <button class="accordion-button" type="button" data-accordion-button>
+                        {{ item.question }} <span>+</span>
+                    </button>
+                    <div class="accordion-body" data-accordion-body {% if not forloop.first %}hidden{% endif %}>
+                        {{ item.answer|linebreaks }}
+                    </div>
+                </div>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
