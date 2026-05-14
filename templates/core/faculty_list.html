@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header"><h1 class="page-title">Факультеты</h1></div>
+        <div class="card-grid">
+            {% for faculty in faculties %}
+                <article class="card">
+                    <h3>{{ faculty.name }}</h3>
+                    <p class="muted">{{ faculty.short_name }}</p>
+                    <p>{{ faculty.description|default:"Факультет участвует в приемной кампании университета." }}</p>
+                    <strong>Кафедры</strong>
+                    <ul>
+                        {% for department in faculty.departments.all %}
+                            <li>{{ department.name }}</li>
+                        {% empty %}
+                            <li>Кафедры не указаны</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

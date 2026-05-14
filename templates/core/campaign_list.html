@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="page-title">Приемная кампания</h1>
+            <a class="btn ghost" href="{% url 'admission_schedule' %}">Сроки приема</a>
+        </div>
+        <div class="card-grid">
+            {% for campaign in campaigns %}
+                <article class="card">
+                    <span class="status {{ campaign.status }}">{{ campaign.get_status_display }}</span>
+                    <h3>{{ campaign.year }} учебный год</h3>
+                    <p>{{ campaign.start_date|date:"d.m.Y" }} - {{ campaign.end_date|date:"d.m.Y" }}</p>
+                    <p>{{ campaign.description|default:"Подробности кампании будут опубликованы позднее." }}</p>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
