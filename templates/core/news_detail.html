@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <article class="container panel">
+        <p class="muted">{{ article.created_at|date:"d.m.Y H:i" }}</p>
+        <h1 class="page-title">{{ article.title }}</h1>
+        {% if article.image %}
+            <img src="{{ article.image.url }}" alt="" style="max-width:100%;border-radius:10px;margin:18px 0;">
+        {% endif %}
+        {{ article.content|linebreaks }}
+    </article>
+</section>
+{% endblock %}
