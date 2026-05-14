@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div data-reveal>
+            <span class="tag">Прием 2026</span>
+            <h1>Поступление в университет Витте начинается здесь</h1>
+            <p class="lead">Выберите направление, подайте заявление онлайн, загрузите документы и отслеживайте статус заявки в личном кабинете.</p>
+            <div class="actions">
+                <a class="btn" href="{% url 'program_list' %}">Выбрать направление</a>
+                <a class="btn ghost" href="{% url 'register' %}">Создать кабинет</a>
+            </div>
+        </div>
+        <div class="hero-panel" data-reveal>
+            <h2>Как работает сервис</h2>
+            <div class="grid">
+                <p><strong>1.</strong> Абитуриент изучает программы и сроки приема.</p>
+                <p><strong>2.</strong> Подает заявку и прикрепляет документы.</p>
+                <p><strong>3.</strong> Методист проверяет заявку, администратор видит общую статистику.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container stats-grid">
+        <div class="stat"><strong>{{ programs_count }}</strong><span>активных направлений</span></div>
+        <div class="stat"><strong>{{ faculties_count }}</strong><span>факультетов</span></div>
+        <div class="stat"><strong>{{ campaigns_count }}</strong><span>приемных кампаний</span></div>
+        <div class="stat"><strong>{{ faq_count }}</strong><span>ответов для абитуриентов</span></div>
+    </div>
+</section>
+
+<section class="section compact">
+    <div class="container">
+        <div class="section-header">
+            <h2>Направления обучения</h2>
+            <a class="btn ghost" href="{% url 'program_list' %}">Все направления</a>
+        </div>
+        <div class="card-grid">
+            {% for program in programs %}
+                <article class="card" data-reveal>
+                    <span class="tag">{{ program.code }}</span>
+                    <h3>{{ program.name }}</h3>
+                    <p class="muted">{{ program.department.faculty.name }}</p>
+                    <p>{{ program.get_level_display }} · {{ program.get_form_display }}</p>
+                    <a class="btn secondary" href="{% url 'program_detail' program.pk %}">Подробнее</a>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Новости приемной комиссии</h2>
+            <a class="btn ghost" href="{% url 'news_list' %}">Все новости</a>
+        </div>
+        <div class="card-grid">
+            {% for item in news %}
+                <article class="card" data-reveal>
+                    <p class="muted">{{ item.created_at|date:"d.m.Y" }}</p>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.content|truncatewords:24 }}</p>
+                    <a class="btn secondary" href="{% url 'news_detail' item.slug %}">Читать</a>
+                </article>
+            {% empty %}
+                {% include 'core/partials/empty.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
