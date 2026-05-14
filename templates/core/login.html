@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="container">
+    <div class="auth-card">
+        <h1>Вход в личный кабинет</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-grid">
+                <label class="field"><span>Логин</span><input class="form-control" name="username" autocomplete="username" required></label>
+                <label class="field"><span>Пароль</span><input class="form-control" type="password" name="password" autocomplete="current-password" required></label>
+            </div>
+            <div class="actions section compact">
+                <button type="submit">Войти</button>
+                <a class="btn ghost" href="{% url 'register' %}">Регистрация</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

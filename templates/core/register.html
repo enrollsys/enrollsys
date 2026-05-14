@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="container">
+    <div class="auth-card">
+        <h1>Регистрация абитуриента</h1>
+        <p class="muted">После регистрации можно выбрать направление и отправить заявку.</p>
+        <form method="post">
+            {% include 'core/partials/form.html' %}
+            <div class="actions section compact">
+                <button type="submit">Создать аккаунт</button>
+                <a class="btn ghost" href="{% url 'login' %}">Уже есть аккаунт</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
