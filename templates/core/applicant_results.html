@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Результаты экзаменов</h1></div>
+    <div class="table-card"><table><thead><tr><th>Заявка</th><th>Направление</th><th>Экзамен</th><th>Балл</th><th>Дата</th></tr></thead><tbody>
+    {% for result in results %}
+        <tr><td>#{{ result.application.pk }}</td><td>{{ result.application.program.name }}</td><td>{{ result.exam.name }}</td><td>{{ result.score }}</td><td>{{ result.recorded_at|date:"d.m.Y" }}</td></tr>
+    {% empty %}
+        <tr><td colspan="5">Результаты пока не внесены.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}

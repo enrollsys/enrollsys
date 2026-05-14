@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Мои документы</h1></div>
+    <div class="table-card"><table><thead><tr><th>Заявка</th><th>Направление</th><th>Тип</th><th>Дата</th><th></th></tr></thead><tbody>
+    {% for doc in documents %}
+        <tr><td>#{{ doc.application.pk }}</td><td>{{ doc.application.program.name }}</td><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y H:i" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
+    {% empty %}
+        <tr><td colspan="5">Документы пока не загружены.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}
