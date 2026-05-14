@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="panel">
+            <h1 class="page-title">Профиль</h1>
+            <p class="muted">{{ request.user.get_full_name|default:request.user.username }} · {{ request.user.email }}</p>
+            <form method="post">
+                {% include 'core/partials/form.html' %}
+                <div class="actions section compact"><button type="submit">Сохранить</button></div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
