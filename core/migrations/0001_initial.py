@@ -114,7 +114,7 @@ class Migration(migrations.Migration):
             name='ApplicationDocument',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('doc_type', models.CharField(choices=[('passport', 'Паспорт'), ('diploma', 'Диплом/Аттестат'), ('photo', 'Фотография'), ('certificate', 'Сертификат/Документ'), ('other', 'Другое')], max_length=20, verbose_name='Тип документа')),
+                ('doc_type', models.CharField(choices=[('passport', 'Паспорт'), ('diploma', 'Диплом/аттестат'), ('photo', 'Фотография'), ('certificate', 'Сертификат/документ'), ('other', 'Другое')], max_length=20, verbose_name='Тип документа')),
                 ('file', models.FileField(upload_to='applications/%Y/%m/', verbose_name='Файл')),
                 ('uploaded_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата загрузки')),
                 ('is_verified', models.BooleanField(default=False, verbose_name='Проверен')),
@@ -208,9 +208,9 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('role', models.CharField(choices=[('applicant', 'Абитуриент'), ('methodist', 'Методист'), ('admin', 'Администратор')], default='applicant', max_length=20)),
-                ('phone', models.CharField(blank=True, max_length=20)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('role', models.CharField(choices=[('applicant', 'Абитуриент'), ('methodist', 'Методист'), ('admin', 'Администратор')], default='applicant', max_length=20, verbose_name='Роль')),
+                ('phone', models.CharField(blank=True, max_length=20, verbose_name='Телефон')),
+                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
             options={
