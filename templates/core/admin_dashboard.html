@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="section-header"><h1 class="page-title">Панель администратора</h1><a class="btn" href="{% url 'export_applications_xlsx' %}">Выгрузить заявки</a></div>
+    <div class="stats-grid">
+        <div class="stat"><strong>{{ stats.total_users }}</strong><span>пользователей</span></div>
+        <div class="stat"><strong>{{ stats.total_applications }}</strong><span>заявок</span></div>
+        <div class="stat"><strong>{{ stats.active_programs }}</strong><span>активных направлений</span></div>
+        <div class="stat"><strong>{{ stats.documents }}</strong><span>файлов</span></div>
+    </div>
+    <div class="dashboard-grid section compact">
+        <a class="card" href="{% url 'admin_users' %}"><h3>Пользователи</h3><p>Учетные записи и роли.</p></a>
+        <a class="card" href="{% url 'admin_applications' %}"><h3>Заявки</h3><p>Все заявки системы.</p></a>
+        <a class="card" href="{% url 'admin_programs' %}"><h3>Направления</h3><p>Образовательные программы.</p></a>
+        <a class="card" href="{% url 'admin_campaigns' %}"><h3>Кампании</h3><p>Сроки приема.</p></a>
+        <a class="card" href="{% url 'admin_reports' %}"><h3>Отчеты</h3><p>Сформированные файлы.</p></a>
+    </div>
+</div></section>
+{% endblock %}
