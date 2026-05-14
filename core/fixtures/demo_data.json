@@ -1,0 +1,71 @@
+[
+  {
+    "model": "core.faculty",
+    "pk": 1,
+    "fields": {
+      "name": "Факультет экономики и финансов",
+      "short_name": "ФЭФ",
+      "description": "Подготовка специалистов в области экономики, финансов и учета.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 1,
+    "fields": {
+      "faculty": 1,
+      "name": "Кафедра экономики",
+      "short_name": "КЭ",
+      "description": "Экономика, финансы и аналитика.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 1,
+    "fields": {
+      "department": 1,
+      "name": "Экономика",
+      "code": "38.03.01",
+      "level": "bachelor",
+      "form": "full_time",
+      "budget_places": 15,
+      "paid_places": 80,
+      "description": "Профиль для будущих экономистов и финансовых аналитиков.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.admissioncampaign",
+    "pk": 1,
+    "fields": {
+      "year": 2026,
+      "start_date": "2026-06-01",
+      "end_date": "2026-08-25",
+      "status": "active",
+      "description": "Основная приемная кампания 2026 года."
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 1,
+    "fields": {
+      "question": "Как подать заявление?",
+      "answer": "Создайте личный кабинет, выберите направление и отправьте заявку.",
+      "order": 1,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.contact",
+    "pk": 1,
+    "fields": {
+      "name": "Управление по организации приема",
+      "email": "admission@muiv.ru",
+      "phone": "+7 (495) 783-68-48",
+      "address": "Москва, 2-й Кожуховский проезд, 12",
+      "office_hours": "Пн-Пт 10:00-18:00",
+      "is_active": true
+    }
+  }
+]
