@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="panel">
+        <h1 class="page-title">Проверка заявки #{{ application.pk }}</h1>
+        <p>{{ application.applicant.get_full_name|default:application.applicant.username }} · {{ application.program.name }}</p>
+        <form method="post">
+            {% include 'core/partials/form.html' %}
+            <div class="actions section compact"><button type="submit">Сохранить</button><a class="btn ghost" href="{% url 'export_application_docx' application.pk %}">DOCX</a></div>
+        </form>
+    </div>
+    <div class="section-header section compact"><h2>Документы</h2></div>
+    <div class="table-card"><table><thead><tr><th>Тип</th><th>Дата</th><th>Проверен</th><th></th></tr></thead><tbody>
+    {% for doc in documents %}
+        <tr><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y" }}</td><td>{{ doc.is_verified|yesno:"Да,Нет" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
+    {% empty %}
+        <tr><td colspan="4">Документы не загружены.</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+</div></section>
+{% endblock %}

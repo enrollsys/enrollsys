@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="section"><div class="container">
+    {% include 'core/partials/dashboard_nav.html' %}
+    <div class="panel">
+        <h1 class="page-title">Добавить результат экзамена</h1>
+        <form method="post">
+            {% include 'core/partials/form.html' %}
+            <div class="actions section compact"><button type="submit">Сохранить результат</button></div>
+        </form>
+    </div>
+</div></section>
+{% endblock %}
