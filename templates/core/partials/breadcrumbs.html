@@ -1,0 +1,18 @@
+<nav class="breadcrumbs-wrap" aria-label="Хлебные крошки">
+    <div class="container breadcrumbs">
+        {% if breadcrumbs %}
+            {% for title, route in breadcrumbs %}
+                {% if route and not forloop.last %}
+                    <a href="{% url route %}">{{ title }}</a>
+                    <span>/</span>
+                {% else %}
+                    <span>{{ title }}</span>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <a href="{% url 'home' %}">Главная</a>
+            <span>/</span>
+            <span>{{ page_title|default:"Страница" }}</span>
+        {% endif %}
+    </div>
+</nav>

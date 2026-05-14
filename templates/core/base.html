@@ -1,0 +1,91 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site_name }}</title>
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+    <script src="{% static 'core/js/main.js' %}" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-strip">
+            <span>ЧОУВО «Московский университет имени С.Ю. Витте»</span>
+            <span>Управление по организации приема</span>
+        </div>
+        <div class="header-inner">
+            <a class="brand" href="{% url 'home' %}">
+                <span class="brand-mark">W</span>
+                <span>
+                    <strong>Витте Прием</strong>
+                    <small>онлайн-сервис для абитуриентов</small>
+                </span>
+            </a>
+            <button class="menu-toggle" type="button" data-menu-toggle aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="primary-nav" data-nav>
+                <a href="{% url 'home' %}">Главная</a>
+                <a href="{% url 'about' %}">О сервисе</a>
+                <a href="{% url 'program_list' %}">Направления</a>
+                <a href="{% url 'faculty_list' %}">Факультеты</a>
+                <a href="{% url 'campaign_list' %}">Приемная кампания</a>
+                <a href="{% url 'admission_rules' %}">Правила</a>
+                <a href="{% url 'admission_schedule' %}">Сроки</a>
+                <a href="{% url 'admission_documents' %}">Документы</a>
+                <a href="{% url 'news_list' %}">Новости</a>
+                <a href="{% url 'faq_list' %}">FAQ</a>
+                <a href="{% url 'contact_list' %}">Контакты</a>
+            </nav>
+            <div class="header-actions">
+                {% if user.is_authenticated %}
+                    {% if current_role == 'admin' %}
+                        <a class="btn secondary" href="{% url 'admin_dashboard' %}">Администратор</a>
+                    {% elif current_role == 'methodist' %}
+                        <a class="btn secondary" href="{% url 'methodist_dashboard' %}">Методист</a>
+                    {% else %}
+                        <a class="btn secondary" href="{% url 'applicant_dashboard' %}">Кабинет</a>
+                    {% endif %}
+                    <a class="btn ghost" href="{% url 'logout' %}">Выйти</a>
+                {% else %}
+                    <a class="btn ghost" href="{% url 'login' %}">Войти</a>
+                    <a class="btn" href="{% url 'register' %}">Подать заявку</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% include 'core/partials/breadcrumbs.html' %}
+        {% if messages %}
+            <div class="container message-stack">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <strong>Витте Прием</strong>
+                <p>Публичный веб-сервис для абитуриентов и сотрудников управления по организации приема.</p>
+            </div>
+            <div>
+                <strong>Навигация</strong>
+                <a href="{% url 'program_list' %}">Направления</a>
+                <a href="{% url 'admission_documents' %}">Документы</a>
+                <a href="{% url 'contact_list' %}">Контакты</a>
+            </div>
+            <div>
+                <strong>Кабинет</strong>
+                <a href="{% url 'login' %}">Вход</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
