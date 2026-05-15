@@ -1,23 +1,58 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
+
+<section class="page-hero">
     <div class="container">
-        <div class="section-header">
-            <h1 class="page-title">Приемная кампания</h1>
-            <a class="btn ghost" href="{% url 'admission_schedule' %}">Сроки приема</a>
-        </div>
-        <div class="card-grid">
-            {% for campaign in campaigns %}
-                <article class="card">
-                    <span class="status {{ campaign.status }}">{{ campaign.get_status_display }}</span>
-                    <h3>{{ campaign.year }} учебный год</h3>
-                    <p>{{ campaign.start_date|date:"d.m.Y" }} - {{ campaign.end_date|date:"d.m.Y" }}</p>
-                    <p>{{ campaign.description|default:"Подробности кампании будут опубликованы позднее." }}</p>
-                </article>
-            {% empty %}
-                {% include 'core/partials/empty.html' %}
-            {% endfor %}
-        </div>
+        <div class="section-label" style="color: var(--gold);">Приём</div>
+        <h1>Приёмная кампания</h1>
+        <p>Сроки и статус текущей и предстоящих приёмных кампаний</p>
     </div>
 </section>
+
+<section class="section">
+    <div class="container">
+        {% if campaigns %}
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                {% for campaign in campaigns %}
+                    <div class="panel" data-reveal>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+                            <div style="display:flex; align-items:center; gap:16px;">
+                                <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg, var(--navy), var(--navy-mid)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0;">{{ campaign.year }}</div>
+                                <div>
+                                    <h3 style="margin-bottom:4px;">Приёмная кампания {{ campaign.year }}</h3>
+                                    <span class="status status-{{ campaign.status }}">{{ campaign.get_status_display }}</span>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                                <div style="text-align:center;">
+                                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Начало</div>
+                                    <div style="font-weight:700; color:var(--navy);">{{ campaign.start_date|date:"d.m.Y" }}</div>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Окончание</div>
+                                    <div style="font-weight:700; color:var(--navy);">{{ campaign.end_date|date:"d.m.Y" }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if campaign.description %}
+                            <div class="divider"></div>
+                            <p style="color:var(--text-muted); line-height:1.7;">{{ campaign.description }}</p>
+                        {% endif %}
+                        {% if campaign.status == 'active' %}
+                            <div class="divider"></div>
+                            <a class="btn btn-primary" href="{% url 'register' %}">✍ Подать заявку сейчас</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📅</div>
+                <h3>Кампании не найдены</h3>
+                <p>Информация о приёмных кампаниях будет опубликована в ближайшее время.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}

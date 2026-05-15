@@ -1,33 +1,70 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
-    <div class="container">
+<div class="container">
+    <div class="dashboard-layout">
         {% include 'core/partials/dashboard_nav.html' %}
-        <div class="panel">
-            <span class="status {{ application.status }}">{{ application.get_status_display }}</span>
-            <h1 class="page-title">Заявка #{{ application.pk }}</h1>
-            <p>{{ application.program.name }} · {{ application.campaign.year }}</p>
-            <div class="actions">
-                <a class="btn" href="{% url 'document_upload' application.pk %}">Загрузить документ</a>
-                <a class="btn ghost" href="{% url 'export_application_docx' application.pk %}">Скачать DOCX</a>
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Кабинет абитуриента</div><h1 class="page-title">Заявка #{{ application.pk }}</h1></div>
+                <span class="status status-{{ application.status }}" style="font-size:14px; padding:8px 16px;">{{ application.get_status_display }}</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:24px; align-items:start;">
+                <div>
+                    <div class="panel" style="margin-bottom:20px;">
+                        <div class="panel-title">📋 Информация о заявке</div>
+                        <div class="info-row"><span class="info-label">Направление</span><span class="info-value">{{ application.program.name }} ({{ application.program.code }})</span></div>
+                        <div class="info-row"><span class="info-label">Факультет</span><span class="info-value">{{ application.program.department.faculty.name }}</span></div>
+                        <div class="info-row"><span class="info-label">Кампания</span><span class="info-value">{{ application.campaign.year }}</span></div>
+                        <div class="info-row"><span class="info-label">Дата подачи</span><span class="info-value">{{ application.created_at|date:"d.m.Y H:i" }}</span></div>
+                        {% if application.comment %}<div class="info-row"><span class="info-label">Комментарий</span><span class="info-value">{{ application.comment }}</span></div>{% endif %}
+                    </div>
+
+                    {% if documents %}
+                    <div class="panel" style="margin-bottom:20px;">
+                        <div class="panel-title">📎 Документы</div>
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            {% for doc in documents %}
+                            <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border); flex-wrap:wrap; gap:10px;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-size:20px;">📎</span>
+                                    <div><div style="font-weight:600;">{{ doc.get_doc_type_display }}</div><div style="font-size:12px; color:var(--text-muted);">{{ doc.uploaded_at|date:"d.m.Y" }}</div></div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    {% if doc.is_verified %}<span class="status status-accepted">✅ Проверен</span>{% else %}<span class="status status-submitted">⏳ Ожидает</span>{% endif %}
+                                    <a class="btn btn-secondary btn-sm" href="{% url 'download_document' doc.pk %}">📥</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if results %}
+                    <div class="panel">
+                        <div class="panel-title">🏆 Результаты</div>
+                        {% for result in results %}
+                        <div class="info-row">
+                            <span class="info-label">{{ result.exam.name }}</span>
+                            <span class="info-value"><strong>{{ result.score }}</strong> / {{ result.exam.max_score }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <div class="panel">
+                        <div class="panel-title">⚡ Действия</div>
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            <a class="btn btn-primary" href="{% url 'export_application_docx' application.pk %}">📄 Скачать DOCX</a>
+                            <a class="btn btn-secondary" href="{% url 'document_upload' application.pk %}">📎 Загрузить документ</a>
+                            <a class="btn btn-secondary" href="{% url 'applicant_applications' %}">← Все заявки</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="section-header section compact"><h2>Документы</h2></div>
-        <div class="table-card"><table><thead><tr><th>Тип</th><th>Дата</th><th>Проверен</th><th></th></tr></thead><tbody>
-        {% for doc in documents %}
-            <tr><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y H:i" }}</td><td>{{ doc.is_verified|yesno:"Да,Нет" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
-        {% empty %}
-            <tr><td colspan="4">Документы не загружены.</td></tr>
-        {% endfor %}
-        </tbody></table></div>
-        <div class="section-header section compact"><h2>Результаты</h2></div>
-        <div class="table-card"><table><thead><tr><th>Экзамен</th><th>Балл</th><th>Примечание</th></tr></thead><tbody>
-        {% for result in results %}
-            <tr><td>{{ result.exam.name }}</td><td>{{ result.score }}</td><td>{{ result.notes|default:"-" }}</td></tr>
-        {% empty %}
-            <tr><td colspan="3">Результатов пока нет.</td></tr>
-        {% endfor %}
-        </tbody></table></div>
     </div>
-</section>
+</div>
 {% endblock %}

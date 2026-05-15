@@ -1,20 +1,27 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Кабинет методиста</h1><a class="btn" href="{% url 'export_applications_xlsx' %}">Выгрузить XLSX</a></div>
-    <div class="dashboard-grid">
-        <a class="card" href="{% url 'methodist_applications' %}"><h3>Заявки</h3><p>Проверка и изменение статусов.</p></a>
-        <a class="card" href="{% url 'methodist_documents' %}"><h3>Документы</h3><p>Файлы абитуриентов.</p></a>
-        <a class="card" href="{% url 'exam_result_create' %}"><h3>Результаты</h3><p>Внести баллы экзаменов.</p></a>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Кабинет методиста</div><h1 class="page-title">Рабочий стол</h1></div>
+                <a class="btn btn-primary" href="{% url 'export_applications_xlsx' %}">📥 Выгрузить XLSX</a>
+            </div>
+            <div class="stats-grid" style="margin-bottom:28px;">
+                <div class="stat" data-reveal data-reveal-delay="1"><strong>{{ pending_count }}</strong><span>Ожидают проверки</span></div>
+                <div class="stat" data-reveal data-reveal-delay="2"><strong>{{ accepted_count }}</strong><span>Принятых</span></div>
+                <div class="stat" data-reveal data-reveal-delay="3"><strong>{{ rejected_count }}</strong><span>Отклонённых</span></div>
+                <div class="stat" data-reveal data-reveal-delay="4"><strong>{{ total_count }}</strong><span>Всего заявок</span></div>
+            </div>
+            <div class="dashboard-grid">
+                <a class="card" href="{% url 'methodist_applications' %}" data-reveal data-reveal-delay="1"><div class="card-icon">📝</div><h3>Заявки</h3><p>Проверка и обработка входящих заявок абитуриентов.</p></a>
+                <a class="card" href="{% url 'methodist_documents' %}" data-reveal data-reveal-delay="2"><div class="card-icon">📎</div><h3>Документы</h3><p>Верификация загруженных документов.</p></a>
+                <a class="card" href="{% url 'exam_result_create' %}" data-reveal data-reveal-delay="3"><div class="card-icon">🏆</div><h3>Внести результат</h3><p>Добавить результаты вступительных испытаний.</p></a>
+                <a class="card" href="{% url 'methodist_templates' %}" data-reveal data-reveal-delay="4"><div class="card-icon">📄</div><h3>Шаблоны</h3><p>Просмотр и скачивание шаблонов документов.</p></a>
+                <a class="card" href="{% url 'export_applications_xlsx' %}" data-reveal data-reveal-delay="5"><div class="card-icon">📊</div><h3>Выгрузка XLSX</h3><p>Экспорт всех заявок в Excel.</p></a>
+            </div>
+        </div>
     </div>
-    <div class="section-header section compact"><h2>Заявки в работе</h2></div>
-    <div class="table-card"><table><thead><tr><th>ID</th><th>Абитуриент</th><th>Направление</th><th>Статус</th><th></th></tr></thead><tbody>
-    {% for app in applications %}
-        <tr><td>#{{ app.pk }}</td><td>{{ app.applicant.get_full_name|default:app.applicant.username }}</td><td>{{ app.program.name }}</td><td><span class="status {{ app.status }}">{{ app.get_status_display }}</span></td><td><a class="btn secondary" href="{% url 'application_review' app.pk %}">Проверить</a></td></tr>
-    {% empty %}
-        <tr><td colspan="5">Нет заявок в работе.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+</div>
 {% endblock %}

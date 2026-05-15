@@ -1,23 +1,81 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
-    <div class="container">
+<div class="container">
+    <div class="dashboard-layout">
         {% include 'core/partials/dashboard_nav.html' %}
-        <div class="section-header">
-            <h1 class="page-title">Кабинет абитуриента</h1>
-            <a class="btn" href="{% url 'application_create' %}">Новая заявка</a>
-        </div>
-        <div class="stats-grid">
-            <div class="stat"><strong>{{ applications|length }}</strong><span>заявок</span></div>
-            <div class="stat"><strong>{{ documents|length }}</strong><span>документов</span></div>
-            <div class="stat"><strong>{{ results|length }}</strong><span>результатов</span></div>
-            <div class="stat"><strong>{{ user.profile.get_role_display }}</strong><span>роль</span></div>
-        </div>
-        <div class="dashboard-grid section compact">
-            <a class="card" href="{% url 'applicant_applications' %}"><h3>Мои заявки</h3><p>Просмотр статусов и печатных форм.</p></a>
-            <a class="card" href="{% url 'applicant_documents' %}"><h3>Документы</h3><p>Загруженные файлы по заявкам.</p></a>
-            <a class="card" href="{% url 'applicant_results' %}"><h3>Результаты</h3><p>Баллы вступительных испытаний.</p></a>
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div>
+                    <div class="section-label">Личный кабинет</div>
+                    <h1 class="page-title">Кабинет абитуриента</h1>
+                </div>
+                <a class="btn btn-primary" href="{% url 'application_create' %}">➕ Новая заявка</a>
+            </div>
+
+            <div class="stats-grid" style="margin-bottom:28px;">
+                <div class="stat" data-reveal data-reveal-delay="1">
+                    <strong>{{ applications|length }}</strong><span>Заявок</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="2">
+                    <strong>{{ documents|length }}</strong><span>Документов</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="3">
+                    <strong>{{ results|length }}</strong><span>Результатов</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="4">
+                    <strong style="font-size:18px; letter-spacing:0;">{{ user.profile.get_role_display }}</strong><span>Роль</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="margin-bottom:28px;">
+                <a class="card" href="{% url 'applicant_applications' %}" data-reveal data-reveal-delay="1">
+                    <div class="card-icon">📝</div>
+                    <h3>Мои заявки</h3>
+                    <p>Просмотр статусов заявок и скачивание заявления в DOCX.</p>
+                </a>
+                <a class="card" href="{% url 'applicant_documents' %}" data-reveal data-reveal-delay="2">
+                    <div class="card-icon">📎</div>
+                    <h3>Документы</h3>
+                    <p>Загруженные файлы по всем вашим заявкам.</p>
+                </a>
+                <a class="card" href="{% url 'applicant_results' %}" data-reveal data-reveal-delay="3">
+                    <div class="card-icon">🏆</div>
+                    <h3>Результаты</h3>
+                    <p>Баллы вступительных испытаний по каждому предмету.</p>
+                </a>
+            </div>
+
+            {% if applications %}
+            <h2 style="margin-bottom:16px; font-size:18px;">Последние заявки</h2>
+            <div class="table-card">
+                <table>
+                    <thead><tr><th>#</th><th>Направление</th><th>Кампания</th><th>Статус</th><th>Дата</th><th></th></tr></thead>
+                    <tbody>
+                        {% for app in applications|slice:":5" %}
+                        <tr>
+                            <td class="text-muted text-sm">{{ app.pk }}</td>
+                            <td>
+                                <div style="font-weight:600;">{{ app.program.name }}</div>
+                                <span class="tag" style="font-size:11px;">{{ app.program.code }}</span>
+                            </td>
+                            <td>{{ app.campaign.year }}</td>
+                            <td><span class="status status-{{ app.status }}">{{ app.get_status_display }}</span></td>
+                            <td class="text-sm text-muted">{{ app.created_at|date:"d.m.Y" }}</td>
+                            <td><a class="btn btn-secondary btn-sm" href="{% url 'application_detail' app.pk %}">Открыть</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <h3>Заявок ещё нет</h3>
+                <p>Выберите направление обучения и подайте первую заявку.</p>
+                <a class="btn btn-primary" href="{% url 'application_create' %}">Подать заявку</a>
+            </div>
+            {% endif %}
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

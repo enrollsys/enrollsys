@@ -1,22 +1,59 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="panel">
-        <h1 class="page-title">Проверка заявки #{{ application.pk }}</h1>
-        <p>{{ application.applicant.get_full_name|default:application.applicant.username }} · {{ application.program.name }}</p>
-        <form method="post">
-            {% include 'core/partials/form.html' %}
-            <div class="actions section compact"><button type="submit">Сохранить</button><a class="btn ghost" href="{% url 'export_application_docx' application.pk %}">DOCX</a></div>
-        </form>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Проверка заявки</div><h1 class="page-title">Заявка #{{ application.pk }}</h1></div>
+                <span class="status status-{{ application.status }}" style="font-size:14px; padding:8px 16px;">{{ application.get_status_display }}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:24px; align-items:start;">
+                <div>
+                    <div class="panel" style="margin-bottom:20px;">
+                        <div class="panel-title">👤 Абитуриент</div>
+                        <div class="info-row"><span class="info-label">ФИО</span><span class="info-value">{{ application.applicant.get_full_name }}</span></div>
+                        <div class="info-row"><span class="info-label">Email</span><span class="info-value">{{ application.applicant.email }}</span></div>
+                        <div class="info-row"><span class="info-label">Направление</span><span class="info-value">{{ application.program.name }} ({{ application.program.code }})</span></div>
+                        <div class="info-row"><span class="info-label">Кампания</span><span class="info-value">{{ application.campaign.year }}</span></div>
+                        <div class="info-row"><span class="info-label">Дата подачи</span><span class="info-value">{{ application.created_at|date:"d.m.Y H:i" }}</span></div>
+                    </div>
+                    {% if documents %}
+                    <div class="panel" style="margin-bottom:20px;">
+                        <div class="panel-title">📎 Документы</div>
+                        {% for doc in documents %}
+                        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border); margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+                            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:18px;">📎</span><strong>{{ doc.get_doc_type_display }}</strong></div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                {% if doc.is_verified %}<span class="status status-accepted">✅ Проверен</span>{% else %}
+                                <form method="post" action="{% url 'verify_document' doc.pk %}" style="display:inline;">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit">✅ Подтвердить</button></form>{% endif %}
+                                <a class="btn btn-secondary btn-sm" href="{% url 'download_document' doc.pk %}">📥</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="panel">
+                        <div class="panel-title">⚡ Изменить статус</div>
+                        <form method="post" action="{% url 'application_review' application.pk %}">
+                            {% csrf_token %}
+                            <div class="field" style="margin-bottom:16px;"><span>Новый статус</span><select name="status" class="form-control">{% for val, label in status_choices %}<option value="{{ val }}" {% if application.status == val %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+                            <div class="field" style="margin-bottom:20px;"><span>Комментарий</span><textarea name="comment" class="form-control" rows="3" placeholder="Необязательный комментарий для абитуриента...">{{ application.comment }}</textarea></div>
+                            <button type="submit">💾 Обновить статус</button>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <div class="panel">
+                        <div class="panel-title">⚡ Действия</div>
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            <a class="btn btn-primary" href="{% url 'export_application_docx' application.pk %}">📄 Скачать DOCX</a>
+                            <a class="btn btn-secondary" href="{% url 'methodist_applications' %}">← Все заявки</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="section-header section compact"><h2>Документы</h2></div>
-    <div class="table-card"><table><thead><tr><th>Тип</th><th>Дата</th><th>Проверен</th><th></th></tr></thead><tbody>
-    {% for doc in documents %}
-        <tr><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y" }}</td><td>{{ doc.is_verified|yesno:"Да,Нет" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
-    {% empty %}
-        <tr><td colspan="4">Документы не загружены.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+</div>
 {% endblock %}

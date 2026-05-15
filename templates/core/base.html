@@ -4,88 +4,217 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site_name }}</title>
+    <meta name="description" content="Онлайн-сервис Управления по организации приема Московского университета имени С.Ю. Витте">
+    <title>{% if page_title %}{{ page_title }} — {% endif %}Витте Прием</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
-    <script src="{% static 'core/js/main.js' %}" defer></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f6d7a'/><text x='16' y='23' font-size='20' font-weight='900' text-anchor='middle' fill='white' font-family='Arial'>В</text></svg>">
 </head>
 <body>
-    <header class="site-header">
-        <div class="top-strip">
-            <span>ЧОУВО «Московский университет имени С.Ю. Витте»</span>
+
+    <!-- ── Top Strip ── -->
+    <div class="top-strip">
+        <div class="top-strip-left">
+            <span>🏛 ЧОУВО «Московский университет имени С.Ю. Витте»</span>
+            <span class="top-strip-sep"></span>
             <span>Управление по организации приема</span>
         </div>
+        <div class="top-strip-right">
+            <a href="tel:+74957803992">📞 +7 (495) 780-39-92</a>
+            <span class="top-strip-sep"></span>
+            <a href="mailto:priem@muiv.ru">✉ priem@muiv.ru</a>
+        </div>
+    </div>
+
+    <!-- ── Header ── -->
+    <header class="site-header" role="banner">
         <div class="header-inner">
-            <a class="brand" href="{% url 'home' %}">
-                <span class="brand-mark">W</span>
-                <span>
-                    <strong>Витте Прием</strong>
-                    <small>онлайн-сервис для абитуриентов</small>
-                </span>
+
+            <!-- Brand -->
+            <a class="brand" href="{% url 'home' %}" aria-label="Витте Прием — на главную">
+                <div class="brand-logo">В</div>
+                <div class="brand-text">
+                    <span class="brand-name">Витте&nbsp;Прием</span>
+                    <span class="brand-sub">онлайн-сервис для абитуриентов</span>
+                </div>
             </a>
-            <button class="menu-toggle" type="button" data-menu-toggle aria-label="Открыть меню">
-                <span></span><span></span><span></span>
-            </button>
-            <nav class="primary-nav" data-nav>
-                <a href="{% url 'home' %}">Главная</a>
-                <a href="{% url 'about' %}">О сервисе</a>
-                <a href="{% url 'program_list' %}">Направления</a>
-                <a href="{% url 'faculty_list' %}">Факультеты</a>
-                <a href="{% url 'campaign_list' %}">Приемная кампания</a>
-                <a href="{% url 'admission_rules' %}">Правила</a>
-                <a href="{% url 'admission_schedule' %}">Сроки</a>
-                <a href="{% url 'admission_documents' %}">Документы</a>
-                <a href="{% url 'news_list' %}">Новости</a>
-                <a href="{% url 'faq_list' %}">FAQ</a>
-                <a href="{% url 'contact_list' %}">Контакты</a>
+
+            <!-- Primary Navigation -->
+            <nav class="primary-nav" data-nav aria-label="Главное меню">
+
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                </div>
+
+                <div class="nav-item" data-dropdown>
+                    <a class="nav-link" href="{% url 'program_list' %}">
+                        Поступление
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg>
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="{% url 'program_list' %}">
+                            <span class="dd-icon">📚</span> Направления обучения
+                        </a>
+                        <a href="{% url 'faculty_list' %}">
+                            <span class="dd-icon">🏛</span> Факультеты
+                        </a>
+                        <a href="{% url 'campaign_list' %}">
+                            <span class="dd-icon">📅</span> Приемная кампания
+                        </a>
+                        <div class="nav-divider"></div>
+                        <a href="{% url 'admission_rules' %}">
+                            <span class="dd-icon">📋</span> Правила приема
+                        </a>
+                        <a href="{% url 'admission_schedule' %}">
+                            <span class="dd-icon">🗓</span> Сроки и расписание
+                        </a>
+                        <a href="{% url 'admission_documents' %}">
+                            <span class="dd-icon">📄</span> Документы
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'news_list' %}">Новости</a>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'faq_list' %}">FAQ</a>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_list' %}">Контакты</a>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">О сервисе</a>
+                </div>
+
             </nav>
+
+            <!-- Header Actions -->
             <div class="header-actions">
                 {% if user.is_authenticated %}
-                    {% if current_role == 'admin' %}
-                        <a class="btn secondary" href="{% url 'admin_dashboard' %}">Администратор</a>
-                    {% elif current_role == 'methodist' %}
-                        <a class="btn secondary" href="{% url 'methodist_dashboard' %}">Методист</a>
-                    {% else %}
-                        <a class="btn secondary" href="{% url 'applicant_dashboard' %}">Кабинет</a>
-                    {% endif %}
-                    <a class="btn ghost" href="{% url 'logout' %}">Выйти</a>
+                    <div class="user-menu">
+                        <div class="user-avatar" title="{{ user.get_full_name|default:user.username }}">
+                            {{ user.username|first|upper }}
+                        </div>
+                        {% if current_role == 'admin' %}
+                            <a class="btn btn-secondary btn-sm" href="{% url 'admin_dashboard' %}">⚙ Панель</a>
+                        {% elif current_role == 'methodist' %}
+                            <a class="btn btn-secondary btn-sm" href="{% url 'methodist_dashboard' %}">📋 Кабинет</a>
+                        {% else %}
+                            <a class="btn btn-secondary btn-sm" href="{% url 'applicant_dashboard' %}">👤 Кабинет</a>
+                        {% endif %}
+                        <a class="btn btn-outline btn-sm" href="{% url 'logout' %}">Выйти</a>
+                    </div>
                 {% else %}
-                    <a class="btn ghost" href="{% url 'login' %}">Войти</a>
-                    <a class="btn" href="{% url 'register' %}">Подать заявку</a>
+                    <a class="btn btn-outline btn-sm" href="{% url 'login' %}">Войти</a>
+                    <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Подать заявку</a>
                 {% endif %}
             </div>
+
+            <!-- Mobile Toggle -->
+            <button class="menu-toggle" type="button" data-menu-toggle aria-label="Открыть меню" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
         </div>
     </header>
 
-    <main>
+    <!-- ── Main Content ── -->
+    <main id="main-content" role="main">
+
         {% include 'core/partials/breadcrumbs.html' %}
+
         {% if messages %}
             <div class="container message-stack">
                 {% for message in messages %}
-                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                    <div class="alert {% if message.tags == 'error' %}alert-error{% elif message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %}" data-auto-dismiss="5000">
+                        {% if message.tags == 'error' %}❌{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+                        {{ message }}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
+
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <strong>Витте Прием</strong>
-                <p>Публичный веб-сервис для абитуриентов и сотрудников управления по организации приема.</p>
+    <!-- ── Footer ── -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-main">
+            <div class="container footer-grid">
+
+                <!-- Brand column -->
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="footer-logo">В</div>
+                        <div>
+                            <span class="footer-brand-name">Витте Прием</span>
+                            <span class="footer-brand-sub">онлайн-сервис</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">
+                        Публичный веб-сервис Управления по организации приема
+                        ЧОУВО «Московский университет имени С.Ю. Витте».
+                        Подайте заявку онлайн и отслеживайте её статус в личном кабинете.
+                    </p>
+                    <div class="footer-social" style="margin-top: 20px;">
+                        <a class="social-btn" href="#" aria-label="ВКонтакте" title="ВКонтакте">В</a>
+                        <a class="social-btn" href="#" aria-label="Telegram" title="Telegram">T</a>
+                        <a class="social-btn" href="#" aria-label="YouTube" title="YouTube">▶</a>
+                    </div>
+                </div>
+
+                <!-- Поступление -->
+                <div class="footer-col">
+                    <h4>Поступление</h4>
+                    <a href="{% url 'program_list' %}">📚 Направления</a>
+                    <a href="{% url 'faculty_list' %}">🏛 Факультеты</a>
+                    <a href="{% url 'campaign_list' %}">📅 Приемная кампания</a>
+                    <a href="{% url 'admission_rules' %}">📋 Правила приема</a>
+                    <a href="{% url 'admission_schedule' %}">🗓 Сроки</a>
+                    <a href="{% url 'admission_documents' %}">📄 Документы</a>
+                </div>
+
+                <!-- Информация -->
+                <div class="footer-col">
+                    <h4>Информация</h4>
+                    <a href="{% url 'about' %}">ℹ О сервисе</a>
+                    <a href="{% url 'news_list' %}">📰 Новости</a>
+                    <a href="{% url 'faq_list' %}">❓ FAQ</a>
+                    <a href="{% url 'contact_list' %}">📞 Контакты</a>
+                </div>
+
+                <!-- Кабинет -->
+                <div class="footer-col">
+                    <h4>Личный кабинет</h4>
+                    <a href="{% url 'login' %}">🔑 Вход</a>
+                    <a href="{% url 'register' %}">✍ Регистрация</a>
+                    {% if user.is_authenticated %}
+                        {% if current_role == 'admin' %}
+                            <a href="{% url 'admin_dashboard' %}">⚙ Панель администратора</a>
+                        {% elif current_role == 'methodist' %}
+                            <a href="{% url 'methodist_dashboard' %}">📋 Кабинет методиста</a>
+                        {% else %}
+                            <a href="{% url 'applicant_dashboard' %}">👤 Кабинет абитуриента</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
             </div>
-            <div>
-                <strong>Навигация</strong>
-                <a href="{% url 'program_list' %}">Направления</a>
-                <a href="{% url 'admission_documents' %}">Документы</a>
-                <a href="{% url 'contact_list' %}">Контакты</a>
-            </div>
-            <div>
-                <strong>Кабинет</strong>
-                <a href="{% url 'login' %}">Вход</a>
-                <a href="{% url 'register' %}">Регистрация</a>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span>© 2024–2026 ЧОУВО «Московский университет имени С.Ю. Витте». Все права защищены.</span>
+                <span>Управление по организации приема</span>
             </div>
         </div>
     </footer>
+
+    <script src="{% static 'core/js/main.js' %}" defer></script>
 </body>
 </html>

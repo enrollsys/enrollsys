@@ -1,13 +1,21 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="panel">
-        <h1 class="page-title">Добавить результат экзамена</h1>
-        <form method="post">
-            {% include 'core/partials/form.html' %}
-            <div class="actions section compact"><button type="submit">Сохранить результат</button></div>
-        </form>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="margin-bottom:28px;"><div class="section-label">Кабинет методиста</div><h1 class="page-title">Внести результат экзамена</h1></div>
+            <div class="panel" style="max-width:600px;">
+                <div class="panel-title">🏆 Результат вступительного испытания</div>
+                <form method="post">
+                    {% include 'core/partials/form.html' %}
+                    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+                        <button type="submit">💾 Сохранить результат</button>
+                        <a class="btn btn-secondary" href="{% url 'methodist_dashboard' %}">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</div></section>
+</div>
 {% endblock %}

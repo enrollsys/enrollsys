@@ -1,35 +1,99 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
-    <div class="container panel">
-        <span class="tag">{{ program.code }}</span>
-        <h1 class="page-title">{{ program.name }}</h1>
-        <p class="muted">{{ program.department.faculty.name }} · {{ program.department.name }}</p>
-        <p>{{ program.description|default:"Описание направления будет опубликовано приемной комиссией." }}</p>
-        <div class="stats-grid">
-            <div class="stat"><strong>{{ program.get_level_display }}</strong><span>уровень</span></div>
-            <div class="stat"><strong>{{ program.get_form_display }}</strong><span>форма</span></div>
-            <div class="stat"><strong>{{ program.budget_places }}</strong><span>бюджетных мест</span></div>
-            <div class="stat"><strong>{{ program.paid_places }}</strong><span>платных мест</span></div>
-        </div>
-        <div class="actions section compact">
-            <a class="btn" href="{% url 'application_create' %}">Подать заявку</a>
-            <a class="btn ghost" href="{% url 'program_list' %}">Все направления</a>
-        </div>
-    </div>
-</section>
-<section class="section compact">
+
+<section class="page-hero">
     <div class="container">
-        <div class="section-header"><h2>Вступительные испытания</h2></div>
-        <div class="table-card">
-            <table><thead><tr><th>Дата</th><th>Экзамен</th><th>Тип</th><th>Макс. балл</th></tr></thead><tbody>
-            {% for exam in exams %}
-                <tr><td>{{ exam.date|date:"d.m.Y" }}</td><td>{{ exam.name }}</td><td>{{ exam.get_exam_type_display }}</td><td>{{ exam.max_score }}</td></tr>
-            {% empty %}
-                <tr><td colspan="4">Экзамены пока не назначены.</td></tr>
-            {% endfor %}
-            </tbody></table>
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap;">
+            <span class="tag" style="border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.15); color:#fff;">{{ program.code }}</span>
+            <span class="tag" style="background:rgba(201,153,59,.2); color:var(--gold); border:1px solid rgba(201,153,59,.4);">{{ program.get_level_display }}</span>
+        </div>
+        <h1>{{ program.name }}</h1>
+        <p>{{ program.department.faculty.name }} · {{ program.department.name }}</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container" style="display:grid; grid-template-columns: 2fr 1fr; gap:32px; align-items:start;">
+
+        <div>
+            {% if program.description %}
+                <div class="panel" style="margin-bottom:24px;">
+                    <div class="panel-title">📋 Описание программы</div>
+                    <p style="color:var(--text-muted); line-height:1.8;">{{ program.description }}</p>
+                </div>
+            {% endif %}
+
+            {% if exams %}
+                <div class="panel">
+                    <div class="panel-title">📝 Вступительные испытания</div>
+                    <div class="table-card" style="border:none; box-shadow:none; overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Экзамен</th>
+                                    <th>Тип</th>
+                                    <th>Дата</th>
+                                    <th>Место</th>
+                                    <th>Макс. балл</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for exam in exams %}
+                                    <tr>
+                                        <td><strong>{{ exam.name }}</strong></td>
+                                        <td>{{ exam.get_exam_type_display }}</td>
+                                        <td>{{ exam.date|date:"d.m.Y" }}</td>
+                                        <td>{{ exam.location|default:"—" }}</td>
+                                        <td><span class="tag">{{ exam.max_score }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div>
+            <div class="panel" style="margin-bottom:20px;">
+                <div class="panel-title">ℹ Информация о программе</div>
+                <div class="info-row">
+                    <span class="info-label">Уровень</span>
+                    <span class="info-value">{{ program.get_level_display }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Форма обучения</span>
+                    <span class="info-value">{{ program.get_form_display }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Факультет</span>
+                    <span class="info-value">{{ program.department.faculty.name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Кафедра</span>
+                    <span class="info-value">{{ program.department.name }}</span>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-bottom:24px;">
+                <div class="stat">
+                    <strong>{{ program.budget_places }}</strong>
+                    <span>Бюджетных мест</span>
+                </div>
+                <div class="stat">
+                    <strong>{{ program.paid_places }}</strong>
+                    <span>Платных мест</span>
+                </div>
+            </div>
+
+            <a class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-bottom:10px;" href="{% url 'register' %}">
+                ✍ Подать заявку
+            </a>
+            <a class="btn btn-secondary" style="width:100%; justify-content:center;" href="{% url 'program_list' %}">
+                ← Все направления
+            </a>
         </div>
     </div>
 </section>
+
 {% endblock %}

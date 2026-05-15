@@ -1,20 +1,40 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
+
+<section class="page-hero">
     <div class="container">
-        <div class="section-header"><h1 class="page-title">Новости</h1></div>
-        <div class="card-grid">
-            {% for item in news %}
-                <article class="card">
-                    <p class="muted">{{ item.created_at|date:"d.m.Y" }}</p>
-                    <h3>{{ item.title }}</h3>
-                    <p>{{ item.content|truncatewords:28 }}</p>
-                    <a class="btn secondary" href="{% url 'news_detail' item.slug %}">Читать</a>
-                </article>
-            {% empty %}
-                {% include 'core/partials/empty.html' %}
-            {% endfor %}
-        </div>
+        <div class="section-label" style="color: var(--gold);">Актуально</div>
+        <h1>Новости приёмной комиссии</h1>
+        <p>Важные объявления и новости о поступлении в университет Витте</p>
     </div>
 </section>
+
+<section class="section">
+    <div class="container">
+        {% if news %}
+            <div class="card-grid">
+                {% for item in news %}
+                    <article class="card" data-reveal data-reveal-delay="{{ forloop.counter }}">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                            <span class="text-sm text-muted">📅 {{ item.created_at|date:"d.m.Y" }}</span>
+                        </div>
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.content|truncatewords:36 }}</p>
+                        <div class="card-footer">
+                            <a class="btn btn-primary btn-sm" href="{% url 'news_detail' item.slug %}">Читать далее →</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📰</div>
+                <h3>Новостей пока нет</h3>
+                <p>Следите за обновлениями — мы публикуем важные новости о приёме.</p>
+                <a class="btn btn-primary" href="{% url 'home' %}">На главную</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}

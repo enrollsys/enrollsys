@@ -1,16 +1,20 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="container">
-    <div class="auth-card">
-        <h1>Регистрация абитуриента</h1>
-        <p class="muted">После регистрации можно выбрать направление и отправить заявку.</p>
-        <form method="post">
-            {% include 'core/partials/form.html' %}
-            <div class="actions section compact">
-                <button type="submit">Создать аккаунт</button>
-                <a class="btn ghost" href="{% url 'login' %}">Уже есть аккаунт</a>
-            </div>
-        </form>
+<div style="background: linear-gradient(135deg, var(--navy), var(--navy-mid)); min-height: 100vh; padding: 40px 20px; margin-top: -1px;">
+    <div style="max-width: 560px; margin: 0 auto;">
+        <div class="auth-card" style="margin: 0; max-width: 100%;">
+            <div class="auth-logo">В</div>
+            <h1 style="text-align:center; margin-bottom:6px;">Регистрация абитуриента</h1>
+            <p class="text-muted text-center" style="margin-bottom:28px; font-size:14px;">После регистрации вы сможете выбрать направление и подать заявку онлайн</p>
+
+            <form method="post" novalidate>
+                {% include 'core/partials/form.html' %}
+                <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
+                    <button type="submit" style="width:100%; justify-content:center;">✍ Создать аккаунт</button>
+                    <a class="btn btn-secondary" style="width:100%; justify-content:center;" href="{% url 'login' %}">Уже есть аккаунт? Войти</a>
+                </div>
+            </form>
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

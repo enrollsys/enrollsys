@@ -1,14 +1,36 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Приемные кампании</h1></div>
-    <div class="table-card"><table><thead><tr><th>Год</th><th>Начало</th><th>Окончание</th><th>Статус</th><th>Описание</th></tr></thead><tbody>
-    {% for campaign in campaigns %}
-        <tr><td>{{ campaign.year }}</td><td>{{ campaign.start_date|date:"d.m.Y" }}</td><td>{{ campaign.end_date|date:"d.m.Y" }}</td><td><span class="status {{ campaign.status }}">{{ campaign.get_status_display }}</span></td><td>{{ campaign.description|default:"-" }}</td></tr>
-    {% empty %}
-        <tr><td colspan="5">Кампаний нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Администрирование</div><h1 class="page-title">Приёмные кампании</h1></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+                {% for campaign in campaigns %}
+                <div class="panel" data-reveal>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+                        <div style="display:flex; align-items:center; gap:14px;">
+                            <div style="width:50px; height:50px; border-radius:12px; background:linear-gradient(135deg, var(--navy), var(--navy-mid)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0;">{{ campaign.year }}</div>
+                            <div>
+                                <h3 style="margin-bottom:4px;">Приёмная кампания {{ campaign.year }}</h3>
+                                <span class="status status-{{ campaign.status }}">{{ campaign.get_status_display }}</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                            <div><div style="font-size:12px; color:var(--text-muted);">Начало</div><strong>{{ campaign.start_date|date:"d.m.Y" }}</strong></div>
+                            <div><div style="font-size:12px; color:var(--text-muted);">Окончание</div><strong>{{ campaign.end_date|date:"d.m.Y" }}</strong></div>
+                            <div><div style="font-size:12px; color:var(--text-muted);">Заявок</div><strong>{{ campaign.applications.count }}</strong></div>
+                        </div>
+                    </div>
+                    {% if campaign.description %}<div class="divider"></div><p style="color:var(--text-muted);">{{ campaign.description }}</p>{% endif %}
+                </div>
+                {% empty %}
+                <div class="empty-state"><div class="empty-icon">📅</div><h3>Кампании не найдены</h3></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,14 +1,41 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Заявки абитуриентов</h1><a class="btn" href="{% url 'export_applications_xlsx' %}">XLSX</a></div>
-    <div class="table-card"><table><thead><tr><th>ID</th><th>Абитуриент</th><th>Email</th><th>Направление</th><th>Статус</th><th></th></tr></thead><tbody>
-    {% for app in applications %}
-        <tr><td>#{{ app.pk }}</td><td>{{ app.applicant.get_full_name|default:app.applicant.username }}</td><td>{{ app.applicant.email }}</td><td>{{ app.program.name }}</td><td><span class="status {{ app.status }}">{{ app.get_status_display }}</span></td><td><a class="btn secondary" href="{% url 'application_review' app.pk %}">Открыть</a></td></tr>
-    {% empty %}
-        <tr><td colspan="6">Заявок нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Кабинет методиста</div><h1 class="page-title">Заявки на проверку</h1></div>
+                <a class="btn btn-primary" href="{% url 'export_applications_xlsx' %}">📥 XLSX</a>
+            </div>
+            <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+                <button class="btn btn-secondary btn-sm active" data-status-filter="all">Все</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="submitted">Поданы</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="under_review">На рассмотрении</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="accepted">Принятые</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="rejected">Отклонённые</button>
+            </div>
+            <div style="margin-bottom:16px;"><input class="form-control" style="max-width:360px;" placeholder="🔍 Поиск..." data-table-filter="meth-apps"></div>
+            <div class="table-card">
+                <table id="meth-apps">
+                    <thead><tr><th>#</th><th>Абитуриент</th><th>Направление</th><th>Статус</th><th>Дата</th><th></th></tr></thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr data-status-row="{{ app.status }}">
+                            <td class="text-muted text-sm">{{ app.pk }}</td>
+                            <td><div style="font-weight:600;">{{ app.applicant.get_full_name|default:app.applicant.username }}</div><div style="font-size:12px; color:var(--text-muted);">{{ app.applicant.email }}</div></td>
+                            <td><div style="font-weight:500;">{{ app.program.name }}</div><span class="tag" style="font-size:11px;">{{ app.program.code }}</span></td>
+                            <td><span class="status status-{{ app.status }}">{{ app.get_status_display }}</span></td>
+                            <td class="text-sm text-muted">{{ app.created_at|date:"d.m.Y" }}</td>
+                            <td><a class="btn btn-primary btn-sm" href="{% url 'application_review' app.pk %}">Рассмотреть</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="6"><div class="empty-state" style="border:none; padding:32px;"><div class="empty-icon">📝</div><h3>Заявок нет</h3></div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

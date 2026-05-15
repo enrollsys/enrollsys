@@ -1,14 +1,106 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="section-label" style="color: var(--gold);">Поступление</div>
+        <h1>Правила приёма</h1>
+        <p>Порядок и условия поступления в Московский университет имени С.Ю. Витте</p>
+    </div>
+</section>
+
 <section class="section">
-    <div class="container panel">
-        <h1 class="page-title">Правила приема</h1>
-        <p class="lead">Подача заявлений выполняется через личный кабинет абитуриента. После отправки заявку рассматривает управление по организации приема.</p>
-        <div class="card-grid">
-            <div class="card"><h3>Регистрация</h3><p>Создайте учетную запись и укажите контактные данные.</p></div>
-            <div class="card"><h3>Выбор программы</h3><p>Выберите направление, форму обучения и приемную кампанию.</p></div>
-            <div class="card"><h3>Проверка</h3><p>Методист проверит документы и обновит статус заявки.</p></div>
+    <div class="container" style="display:grid; grid-template-columns: 2fr 1fr; gap:32px; align-items:start;">
+        <div>
+            <div class="panel" style="margin-bottom:24px;">
+                <div class="panel-title">📋 Общие условия</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Этап 1</div>
+                        <div class="timeline-title">Ознакомление с программами</div>
+                        <div class="timeline-body">Изучите все доступные направления обучения, условия приёма, количество мест и требования к абитуриентам.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Этап 2</div>
+                        <div class="timeline-title">Регистрация и подача заявки</div>
+                        <div class="timeline-body">Зарегистрируйтесь на сервисе и подайте заявку на выбранное направление в период действия приёмной кампании.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Этап 3</div>
+                        <div class="timeline-title">Предоставление документов</div>
+                        <div class="timeline-body">Загрузите сканы всех необходимых документов через личный кабинет. Оригиналы предоставляются при зачислении.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Этап 4</div>
+                        <div class="timeline-title">Вступительные испытания</div>
+                        <div class="timeline-body">Пройдите вступительные испытания согласно расписанию. Результаты будут внесены в систему методистом.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Этап 5</div>
+                        <div class="timeline-title">Зачисление</div>
+                        <div class="timeline-body">По результатам испытаний принимается решение о зачислении. Статус отображается в личном кабинете.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">📄 Перечень документов</div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div style="display:flex; gap:12px; align-items:center; padding:12px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                        <span style="font-size:20px;">🪪</span>
+                        <div>
+                            <div style="font-weight:600;">Паспорт гражданина РФ</div>
+                            <div style="font-size:13px; color:var(--text-muted);">Основной документ, удостоверяющий личность</div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:12px; align-items:center; padding:12px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                        <span style="font-size:20px;">🎓</span>
+                        <div>
+                            <div style="font-weight:600;">Документ об образовании</div>
+                            <div style="font-size:13px; color:var(--text-muted);">Аттестат о среднем образовании или диплом</div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:12px; align-items:center; padding:12px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                        <span style="font-size:20px;">📸</span>
+                        <div>
+                            <div style="font-weight:600;">Фотографии 3×4</div>
+                            <div style="font-size:13px; color:var(--text-muted);">6 фотографий установленного образца</div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:12px; align-items:center; padding:12px 14px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                        <span style="font-size:20px;">📜</span>
+                        <div>
+                            <div style="font-weight:600;">Результаты ЕГЭ</div>
+                            <div style="font-size:13px; color:var(--text-muted);">Сертификат ЕГЭ (при наличии)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, var(--teal-light), var(--bg-alt)); border-color:var(--teal);">
+                <div class="panel-title" style="border-color:rgba(15,109,122,.2);">🚀 Начать поступление</div>
+                <p style="color:var(--text-muted); margin-bottom:16px; font-size:14px;">Подайте заявку онлайн и мы свяжемся с вами для уточнения деталей.</p>
+                <a class="btn btn-primary" style="width:100%; justify-content:center;" href="{% url 'register' %}">✍ Зарегистрироваться</a>
+                <a class="btn btn-secondary" style="width:100%; justify-content:center; margin-top:10px;" href="{% url 'contact_list' %}">📞 Контакты</a>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">📌 Важно знать</div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="alert alert-info">Заявки принимаются только в период активной приёмной кампании.</div>
+                    <div class="alert alert-warning">Загружайте только чёткие, читаемые сканы документов.</div>
+                    <div class="alert alert-success">Оригиналы документов предоставляются при фактическом зачислении.</div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
 {% endblock %}

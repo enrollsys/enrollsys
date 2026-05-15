@@ -1,21 +1,71 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="section-label" style="color: var(--gold);">Связаться</div>
+        <h1>Контакты приёмной комиссии</h1>
+        <p>Мы готовы ответить на ваши вопросы о поступлении</p>
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
-        <div class="section-header"><h1 class="page-title">Контакты</h1></div>
-        <div class="card-grid">
-            {% for contact in contacts %}
-                <article class="card">
-                    <h3>{{ contact.name }}</h3>
-                    <p><strong>Email:</strong> {{ contact.email }}</p>
-                    <p><strong>Телефон:</strong> {{ contact.phone|default:"Уточняется" }}</p>
-                    <p><strong>Адрес:</strong> {{ contact.address|default:"Москва" }}</p>
-                    <p><strong>Часы работы:</strong> {{ contact.office_hours|default:"Пн-Пт 10:00-18:00" }}</p>
-                </article>
-            {% empty %}
-                {% include 'core/partials/empty.html' %}
-            {% endfor %}
+        {% if contacts %}
+            <div class="card-grid">
+                {% for contact in contacts %}
+                    <div class="card" data-reveal>
+                        <div class="card-icon">👤</div>
+                        <h3>{{ contact.name }}</h3>
+                        {% if contact.address %}
+                            <div style="display:flex; gap:8px; align-items:flex-start; font-size:14px; color:var(--text-muted);">
+                                <span>📍</span>
+                                <span>{{ contact.address }}</span>
+                            </div>
+                        {% endif %}
+                        {% if contact.phone %}
+                            <a href="tel:{{ contact.phone }}" style="display:flex; gap:8px; align-items:center; font-size:14px; color:var(--teal); font-weight:600;">
+                                📞 {{ contact.phone }}
+                            </a>
+                        {% endif %}
+                        <a href="mailto:{{ contact.email }}" style="display:flex; gap:8px; align-items:center; font-size:14px; color:var(--teal); font-weight:600;">
+                            ✉ {{ contact.email }}
+                        </a>
+                        {% if contact.office_hours %}
+                            <div style="font-size:13px; color:var(--text-muted); padding:10px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                                🕐 {{ contact.office_hours }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📞</div>
+                <h3>Контакты не найдены</h3>
+                <p>Информация появится здесь в ближайшее время.</p>
+            </div>
+        {% endif %}
+
+        <!-- General info -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px;" class="section-xs">
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">📍</div>
+                <h3>Адрес</h3>
+                <p>г. Москва, ул. 2-я Кожуховская, д.12, стр.1</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="2">
+                <div class="feature-icon">🕐</div>
+                <h3>Часы работы</h3>
+                <p>Пн–Пт: 9:00–18:00<br>Сб–Вс: выходной</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="3">
+                <div class="feature-icon">🚇</div>
+                <h3>Как добраться</h3>
+                <p>Метро Кожуховская, Автозаводская (10 минут пешком)</p>
+            </div>
         </div>
     </div>
 </section>
+
 {% endblock %}

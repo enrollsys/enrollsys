@@ -1,17 +1,55 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
-    <div class="container">
+<div class="container">
+    <div class="dashboard-layout">
         {% include 'core/partials/dashboard_nav.html' %}
-        <div class="panel">
-            <h1 class="page-title">Загрузка документа</h1>
-            <p class="muted">Файл будет прикреплен к заявке #{{ application.pk }}.</p>
-            <form method="post" enctype="multipart/form-data">
-                {% include 'core/partials/form.html' %}
-                <p class="muted" data-file-preview>Файл не выбран</p>
-                <div class="actions section compact"><button type="submit">Загрузить</button><a class="btn ghost" href="{% url 'application_detail' application.pk %}">Назад</a></div>
-            </form>
+        <div class="dashboard-content">
+            <div style="margin-bottom:28px;"><div class="section-label">Кабинет абитуриента</div><h1 class="page-title">Загрузка документа</h1></div>
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:24px; align-items:start;">
+                <div class="panel">
+                    <div class="panel-title">📎 Заявка #{{ application.pk }} — {{ application.program.name }}</div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="display:flex; flex-direction:column; gap:16px;">
+                        {% for field in form %}
+                            {% if field.field.widget.input_type == 'file' %}
+                            <div class="field">
+                                <span>{{ field.label }}</span>
+                                <div class="file-drop" data-file-drop>
+                                    <div class="file-drop-icon">📁</div>
+                                    <h4>Перетащите файл сюда</h4>
+                                    <p>или нажмите для выбора файла</p>
+                                    {{ field }}
+                                    <div class="file-preview-name" data-file-preview style="display:none;"></div>
+                                </div>
+                                {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                            </div>
+                            {% else %}
+                            <div class="field">
+                                <span>{{ field.label }}</span>
+                                {{ field }}
+                                {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                        <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+                            <button type="submit">📤 Загрузить</button>
+                            <a class="btn btn-secondary" href="{% url 'application_detail' application.pk %}">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel" style="background:var(--teal-light); border-color:var(--teal);">
+                    <div class="panel-title" style="border-color:rgba(15,109,122,.2);">📌 Требования</div>
+                    <div style="display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--text-muted);">
+                        <div>✅ Форматы: PDF, JPG, PNG, DOC, DOCX</div>
+                        <div>✅ Максимальный размер: 10 МБ</div>
+                        <div>✅ Файл должен быть чётким и читаемым</div>
+                        <div>✅ Загружайте только оригинальные документы</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

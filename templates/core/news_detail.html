@@ -1,13 +1,24 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
-    <article class="container panel">
-        <p class="muted">{{ article.created_at|date:"d.m.Y H:i" }}</p>
-        <h1 class="page-title">{{ article.title }}</h1>
-        {% if article.image %}
-            <img src="{{ article.image.url }}" alt="" style="max-width:100%;border-radius:10px;margin:18px 0;">
-        {% endif %}
-        {{ article.content|linebreaks }}
-    </article>
+
+<section class="page-hero">
+    <div class="container">
+        <p class="text-sm" style="color: var(--gold); margin-bottom: 12px;">📅 {{ article.created_at|date:"d.m.Y" }}</p>
+        <h1>{{ article.title }}</h1>
+    </div>
 </section>
+
+<section class="section">
+    <div class="container" style="max-width: 820px;">
+        <div class="panel" style="font-size: 16px; line-height: 1.85; color: var(--text-muted);">
+            {{ article.content|linebreaksbr }}
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap;">
+            <a class="btn btn-secondary" href="{% url 'news_list' %}">← Все новости</a>
+            <a class="btn btn-primary" href="{% url 'register' %}">✍ Подать заявку</a>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

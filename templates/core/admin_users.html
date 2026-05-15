@@ -1,14 +1,70 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Пользователи</h1></div>
-    <div class="table-card"><table><thead><tr><th>Логин</th><th>ФИО</th><th>Email</th><th>Роль</th><th>Активен</th></tr></thead><tbody>
-    {% for item in users %}
-        <tr><td>{{ item.username }}</td><td>{{ item.get_full_name|default:"-" }}</td><td>{{ item.email }}</td><td>{{ item.profile.get_role_display|default:"-" }}</td><td>{{ item.is_active|yesno:"Да,Нет" }}</td></tr>
-    {% empty %}
-        <tr><td colspan="5">Пользователей нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div>
+                    <div class="section-label">Администрирование</div>
+                    <h1 class="page-title">Пользователи</h1>
+                </div>
+                <span class="tag" style="font-size:14px;">Всего: {{ users|length }}</span>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <input class="form-control" style="max-width:360px;" placeholder="🔍 Поиск пользователей..." data-table-filter="users-table">
+            </div>
+
+            <div class="table-card">
+                <table id="users-table">
+                    <thead><tr>
+                        <th>#</th>
+                        <th>Пользователь</th>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th>Дата регистрации</th>
+                        <th>Статус</th>
+                    </tr></thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td class="text-muted text-sm">{{ u.pk }}</td>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg, var(--teal), var(--navy)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">{{ u.username|first|upper }}</div>
+                                    <div>
+                                        <div style="font-weight:600;">{{ u.username }}</div>
+                                        <div style="font-size:12px; color:var(--text-muted);">{{ u.get_full_name }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ u.email|default:"—" }}</td>
+                            <td>
+                                {% if u.profile.role == 'admin' %}
+                                    <span class="status status-accepted">⚙ Администратор</span>
+                                {% elif u.profile.role == 'methodist' %}
+                                    <span class="status status-submitted">📋 Методист</span>
+                                {% else %}
+                                    <span class="status status-planned">👤 Абитуриент</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-sm text-muted">{{ u.date_joined|date:"d.m.Y" }}</td>
+                            <td>
+                                {% if u.is_active %}
+                                    <span class="status status-accepted">Активен</span>
+                                {% else %}
+                                    <span class="status status-rejected">Заблокирован</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="6"><div class="empty-state" style="border:none; padding:32px;"><div class="empty-icon">👥</div><h3>Пользователи не найдены</h3></div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

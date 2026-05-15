@@ -1,14 +1,71 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Отчеты и выгрузки</h1><a class="btn" href="{% url 'export_applications_xlsx' %}">Сформировать XLSX</a></div>
-    <div class="table-card"><table><thead><tr><th>Файл</th><th>Размер</th><th></th></tr></thead><tbody>
-    {% for file in files %}
-        <tr><td>{{ file.name }}</td><td>{{ file.size }} байт</td><td><a class="btn secondary" href="{% url 'download_generated' file.name %}">Скачать</a></td></tr>
-    {% empty %}
-        <tr><td colspan="3">Сформированных файлов пока нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Администрирование</div><h1 class="page-title">Отчёты и выгрузки</h1></div>
+                <a class="btn btn-primary" href="{% url 'export_applications_xlsx' %}">📊 Сформировать XLSX</a>
+            </div>
+
+            <div class="dashboard-grid" style="margin-bottom:28px;">
+                <div class="card" data-reveal>
+                    <div class="card-icon">📊</div>
+                    <h3>Реестр заявок (XLSX)</h3>
+                    <p>Полный список всех заявок с данными абитуриентов и статусами.</p>
+                    <div class="card-footer">
+                        <a class="btn btn-primary btn-sm" href="{% url 'export_applications_xlsx' %}">📥 Скачать XLSX</a>
+                    </div>
+                </div>
+                <div class="card" data-reveal data-reveal-delay="2">
+                    <div class="card-icon">📝</div>
+                    <h3>Заявление абитуриента (DOCX)</h3>
+                    <p>Документ формируется индивидуально для каждой заявки.</p>
+                    <div class="card-footer">
+                        <span class="text-muted text-sm">Доступно на странице заявки</span>
+                    </div>
+                </div>
+                <div class="card" data-reveal data-reveal-delay="3">
+                    <div class="card-icon">🗂</div>
+                    <h3>Сформированные файлы</h3>
+                    <p>История всех ранее сформированных документов.</p>
+                    <div class="card-footer">
+                        <span class="tag">{{ files|length }} файлов</span>
+                    </div>
+                </div>
+            </div>
+
+            {% if files %}
+            <h2 style="margin-bottom:16px;">📁 Файловое хранилище</h2>
+            <div class="table-card">
+                <table>
+                    <thead><tr><th>Файл</th><th>Размер</th><th></th></tr></thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-size:20px;">{% if '.xlsx' in file.name %}📊{% elif '.docx' in file.name %}📝{% else %}📄{% endif %}</span>
+                                    <strong>{{ file.name }}</strong>
+                                </div>
+                            </td>
+                            <td class="text-muted text-sm">{{ file.size|filesizeformat }}</td>
+                            <td><a class="btn btn-secondary btn-sm" href="{% url 'download_generated' file.name %}">📥 Скачать</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📁</div>
+                <h3>Файлов нет</h3>
+                <p>Сформируйте первый отчёт, нажав кнопку выше.</p>
+                <a class="btn btn-primary" href="{% url 'export_applications_xlsx' %}">Сформировать XLSX</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

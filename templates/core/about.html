@@ -1,14 +1,84 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="section-label" style="color: var(--gold);">О проекте</div>
+        <h1>О сервисе «Витте Прием»</h1>
+        <p>Официальный онлайн-сервис Управления по организации приема ЧОУВО «Московский университет имени С.Ю. Витте»</p>
+    </div>
+</section>
+
 <section class="section">
-    <div class="container panel">
-        <h1 class="page-title">О сервисе</h1>
-        <p class="lead">Веб-сервис автоматизирует работу управления по организации приема: от первого знакомства абитуриента с программами до обработки заявок сотрудниками университета.</p>
-        <div class="card-grid">
-            <div class="card"><h3>Для абитуриентов</h3><p>Информация, заявка, документы и статусы доступны в одном личном кабинете.</p></div>
-            <div class="card"><h3>Для методистов</h3><p>Заявки, прикрепленные файлы и результаты экзаменов собраны в рабочем разделе.</p></div>
-            <div class="card"><h3>Для администратора</h3><p>Сводные данные, пользователи, направления, кампании и отчеты находятся в закрытой панели.</p></div>
+    <div class="container" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start;">
+        <div>
+            <div class="section-label">Что это такое</div>
+            <h2>Цифровая приёмная комиссия</h2>
+            <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin: 16px 0 24px;">
+                «Витте Прием» — это веб-сервис, разработанный для автоматизации работы Управления 
+                по организации приема Московского университета имени С.Ю. Витте. Сервис позволяет 
+                абитуриентам подавать заявки онлайн, а сотрудникам — обрабатывать их в единой системе.
+            </p>
+            <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 32px;">
+                Система охватывает полный цикл приёма: от ознакомления с программами и подачи заявки 
+                до загрузки документов, проверки методистом и принятия окончательного решения 
+                администратором.
+            </p>
+
+            <div class="features-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 32px;">
+                <div class="feature-card" style="text-align: left; padding: 20px;">
+                    <div class="feature-icon" style="margin: 0 0 14px;">👤</div>
+                    <h3 style="font-size: 15px;">Абитуриент</h3>
+                    <p>Подача заявок, загрузка документов, просмотр статусов и результатов.</p>
+                </div>
+                <div class="feature-card" style="text-align: left; padding: 20px;">
+                    <div class="feature-icon" style="margin: 0 0 14px;">📋</div>
+                    <h3 style="font-size: 15px;">Методист</h3>
+                    <p>Проверка заявок, верификация документов, внесение результатов экзаменов.</p>
+                </div>
+                <div class="feature-card" style="text-align: left; padding: 20px;">
+                    <div class="feature-icon" style="margin: 0 0 14px;">⚙</div>
+                    <h3 style="font-size: 15px;">Администратор</h3>
+                    <p>Управление пользователями, направлениями, кампаниями и отчётами.</p>
+                </div>
+                <div class="feature-card" style="text-align: left; padding: 20px;">
+                    <div class="feature-icon" style="margin: 0 0 14px;">📊</div>
+                    <h3 style="font-size: 15px;">Аналитика</h3>
+                    <p>Статистика приёма, выгрузка данных в XLSX и DOCX.</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="panel" style="margin-bottom: 20px;">
+                <div class="panel-title">🏛 Университет</div>
+                <div class="info-row">
+                    <span class="info-label">Полное название</span>
+                    <span class="info-value">ЧОУВО «Московский университет имени С.Ю. Витте»</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Отдел</span>
+                    <span class="info-value">Управление по организации приема</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Год основания</span>
+                    <span class="info-value">1993</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Лицензия</span>
+                    <span class="info-value">Серия 90Л01 №0007663</span>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">🛠 Технологии</div>
+                <div class="info-row"><span class="info-label">Backend</span><span class="info-value">Python 3, Django</span></div>
+                <div class="info-row"><span class="info-label">База данных</span><span class="info-value">PostgreSQL</span></div>
+                <div class="info-row"><span class="info-label">Frontend</span><span class="info-value">HTML5, CSS3, JavaScript</span></div>
+                <div class="info-row"><span class="info-label">Документы</span><span class="info-value">python-docx, openpyxl</span></div>
+            </div>
         </div>
     </div>
 </section>
+
 {% endblock %}

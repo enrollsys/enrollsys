@@ -1,27 +1,63 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section">
+
+<section class="page-hero">
     <div class="container">
-        <div class="section-header"><h1 class="page-title">Факультеты</h1></div>
-        <div class="card-grid">
-            {% for faculty in faculties %}
-                <article class="card">
-                    <h3>{{ faculty.name }}</h3>
-                    <p class="muted">{{ faculty.short_name }}</p>
-                    <p>{{ faculty.description|default:"Факультет участвует в приемной кампании университета." }}</p>
-                    <strong>Кафедры</strong>
-                    <ul>
-                        {% for department in faculty.departments.all %}
-                            <li>{{ department.name }}</li>
-                        {% empty %}
-                            <li>Кафедры не указаны</li>
-                        {% endfor %}
-                    </ul>
-                </article>
-            {% empty %}
-                {% include 'core/partials/empty.html' %}
-            {% endfor %}
-        </div>
+        <div class="section-label" style="color: var(--gold);">Структура</div>
+        <h1>Факультеты университета</h1>
+        <p>Академические подразделения и их направления обучения</p>
     </div>
 </section>
+
+<section class="section">
+    <div class="container">
+        {% for faculty in faculties %}
+            <div class="panel" style="margin-bottom:24px;" data-reveal>
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:20px; flex-wrap:wrap;">
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <div style="width:54px; height:54px; border-radius:14px; background:linear-gradient(135deg, var(--teal-light), var(--bg-alt)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0;">🏛</div>
+                        <div>
+                            <h2 style="font-size:20px; margin-bottom:4px;">{{ faculty.name }}</h2>
+                            {% if faculty.short_name %}<span class="tag">{{ faculty.short_name }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <span class="tag" style="background:var(--green-light); color:var(--green);">
+                        {{ faculty.departments.count }} кафедр
+                    </span>
+                </div>
+
+                {% if faculty.description %}
+                    <p style="color:var(--text-muted); margin-bottom:20px; line-height:1.7;">{{ faculty.description }}</p>
+                {% endif %}
+
+                <div class="divider"></div>
+                <h4 style="margin-bottom:16px; font-size:14px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em;">Кафедры и направления</h4>
+
+                {% for department in faculty.departments.all %}
+                    {% if department.is_active %}
+                        <div style="margin-bottom:16px; padding:16px; background:var(--bg); border-radius:var(--radius); border:1px solid var(--border);">
+                            <div style="font-weight:600; margin-bottom:10px; font-size:15px;">{{ department.name }}</div>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                {% for program in department.programs.all %}
+                                    {% if program.is_active %}
+                                        <a href="{% url 'program_detail' program.pk %}" class="tag" style="text-decoration:none; transition:all .2s;">
+                                            {{ program.code }} {{ program.name }}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <div class="empty-icon">🏛</div>
+                <h3>Факультеты не найдены</h3>
+                <p>Информация о факультетах появится здесь.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
 {% endblock %}

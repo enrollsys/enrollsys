@@ -1,30 +1,44 @@
 {% extends 'core/base.html' %}
 {% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="section-label" style="color: var(--gold);">Расписание</div>
+        <h1>Сроки и расписание приёма</h1>
+        <p>Даты вступительных испытаний и этапов приёма</p>
+    </div>
+</section>
 <section class="section">
     <div class="container">
-        <div class="section-header"><h1 class="page-title">Сроки приема</h1></div>
-        <div class="card-grid">
-            {% for campaign in campaigns %}
-                <article class="card">
-                    <span class="status {{ campaign.status }}">{{ campaign.get_status_display }}</span>
-                    <h3>{{ campaign.year }} учебный год</h3>
-                    <p>{{ campaign.start_date|date:"d.m.Y" }} - {{ campaign.end_date|date:"d.m.Y" }}</p>
-                    <p>{{ campaign.description|default:"Подробности появятся позднее." }}</p>
-                </article>
-            {% empty %}
-                {% include 'core/partials/empty.html' %}
-            {% endfor %}
+        {% if campaigns %}
+        <div style="margin-bottom:32px;">
+            <h2 style="margin-bottom:20px;">Приёмные кампании</h2>
+            <div class="table-card">
+                <table><thead><tr><th>Год</th><th>Начало</th><th>Окончание</th><th>Статус</th></tr></thead>
+                <tbody>{% for c in campaigns %}<tr>
+                    <td><strong>{{ c.year }}</strong></td>
+                    <td>{{ c.start_date|date:"d.m.Y" }}</td>
+                    <td>{{ c.end_date|date:"d.m.Y" }}</td>
+                    <td><span class="status status-{{ c.status }}">{{ c.get_status_display }}</span></td>
+                </tr>{% endfor %}</tbody></table>
+            </div>
         </div>
-        <div class="section-header section compact"><h2>Вступительные испытания</h2></div>
+        {% endif %}
+        {% if exams %}
+        <h2 style="margin-bottom:20px;">Расписание вступительных испытаний</h2>
         <div class="table-card">
-            <table><thead><tr><th>Дата</th><th>Экзамен</th><th>Направление</th><th>Место</th></tr></thead><tbody>
-            {% for exam in exams %}
-                <tr><td>{{ exam.date|date:"d.m.Y" }}</td><td>{{ exam.name }}</td><td>{{ exam.program.name }}</td><td>{{ exam.location|default:"Уточняется" }}</td></tr>
-            {% empty %}
-                <tr><td colspan="4">Расписание пока не опубликовано.</td></tr>
-            {% endfor %}
-            </tbody></table>
+            <table><thead><tr><th>Экзамен</th><th>Направление</th><th>Тип</th><th>Дата</th><th>Место</th><th>Макс. балл</th></tr></thead>
+            <tbody>{% for exam in exams %}<tr>
+                <td><strong>{{ exam.name }}</strong></td>
+                <td><a href="{% url 'program_detail' exam.program.pk %}" style="color:var(--teal);">{{ exam.program.name }}</a></td>
+                <td>{{ exam.get_exam_type_display }}</td>
+                <td>{{ exam.date|date:"d.m.Y" }}</td>
+                <td>{{ exam.location|default:"—" }}</td>
+                <td><span class="tag">{{ exam.max_score }}</span></td>
+            </tr>{% endfor %}</tbody></table>
         </div>
+        {% else %}
+        <div class="empty-state"><div class="empty-icon">🗓</div><h3>Расписание не опубликовано</h3><p>Расписание испытаний появится здесь ближе к началу приёма.</p></div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

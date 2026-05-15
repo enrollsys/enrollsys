@@ -1,14 +1,37 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Направления</h1></div>
-    <div class="table-card"><table><thead><tr><th>Код</th><th>Название</th><th>Факультет</th><th>Форма</th><th>Места</th><th>Активно</th></tr></thead><tbody>
-    {% for program in programs %}
-        <tr><td>{{ program.code }}</td><td>{{ program.name }}</td><td>{{ program.department.faculty.name }}</td><td>{{ program.get_form_display }}</td><td>{{ program.budget_places }} / {{ program.paid_places }}</td><td>{{ program.is_active|yesno:"Да,Нет" }}</td></tr>
-    {% empty %}
-        <tr><td colspan="6">Направлений нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div><div class="section-label">Администрирование</div><h1 class="page-title">Направления обучения</h1></div>
+            </div>
+            <div style="margin-bottom:16px;"><input class="form-control" style="max-width:360px;" placeholder="🔍 Поиск..." data-table-filter="progs-table"></div>
+            <div class="table-card">
+                <table id="progs-table">
+                    <thead><tr><th>Код</th><th>Название</th><th>Уровень</th><th>Форма</th><th>Бюджет</th><th>Платных</th><th>Статус</th></tr></thead>
+                    <tbody>
+                        {% for p in programs %}
+                        <tr>
+                            <td><span class="tag">{{ p.code }}</span></td>
+                            <td>
+                                <div style="font-weight:600;"><a href="{% url 'program_detail' p.pk %}" style="color:var(--teal);">{{ p.name }}</a></div>
+                                <div style="font-size:12px; color:var(--text-muted);">{{ p.department.faculty.name }}</div>
+                            </td>
+                            <td>{{ p.get_level_display }}</td>
+                            <td>{{ p.get_form_display }}</td>
+                            <td><strong>{{ p.budget_places }}</strong></td>
+                            <td><strong>{{ p.paid_places }}</strong></td>
+                            <td>{% if p.is_active %}<span class="status status-accepted">Активно</span>{% else %}<span class="status status-rejected">Неактивно</span>{% endif %}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="7"><div class="empty-state" style="border:none; padding:32px;"><div class="empty-icon">📚</div><h3>Направления не найдены</h3></div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

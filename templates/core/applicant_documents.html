@@ -1,14 +1,36 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Мои документы</h1></div>
-    <div class="table-card"><table><thead><tr><th>Заявка</th><th>Направление</th><th>Тип</th><th>Дата</th><th></th></tr></thead><tbody>
-    {% for doc in documents %}
-        <tr><td>#{{ doc.application.pk }}</td><td>{{ doc.application.program.name }}</td><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y H:i" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
-    {% empty %}
-        <tr><td colspan="5">Документы пока не загружены.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="margin-bottom:28px;"><div class="section-label">Кабинет абитуриента</div><h1 class="page-title">Мои документы</h1></div>
+            {% if documents %}
+            <div class="table-card">
+                <table>
+                    <thead><tr><th>Тип документа</th><th>Заявка</th><th>Дата загрузки</th><th>Статус</th><th></th></tr></thead>
+                    <tbody>
+                        {% for doc in documents %}
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-size:20px;">📎</span>
+                                    <div><div style="font-weight:600;">{{ doc.get_doc_type_display }}</div><div style="font-size:12px; color:var(--text-muted);">{{ doc.file.name|default:"—" }}</div></div>
+                                </div>
+                            </td>
+                            <td><a href="{% url 'application_detail' doc.application.pk %}" style="color:var(--teal); font-weight:600;">Заявка #{{ doc.application.pk }}</a></td>
+                            <td class="text-sm text-muted">{{ doc.uploaded_at|date:"d.m.Y H:i" }}</td>
+                            <td>{% if doc.is_verified %}<span class="status status-accepted">✅ Проверен</span>{% else %}<span class="status status-submitted">⏳ На проверке</span>{% endif %}</td>
+                            <td><a class="btn btn-secondary btn-sm" href="{% url 'download_document' doc.pk %}">📥 Скачать</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state"><div class="empty-icon">📎</div><h3>Документов нет</h3><p>Загрузите документы к вашей заявке.</p><a class="btn btn-primary" href="{% url 'applicant_applications' %}">Мои заявки</a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

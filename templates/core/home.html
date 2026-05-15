@@ -1,76 +1,195 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
+<!-- Hero -->
 <section class="hero">
     <div class="container hero-grid">
-        <div data-reveal>
-            <span class="tag">Прием 2026</span>
-            <h1>Поступление в университет Витте начинается здесь</h1>
-            <p class="lead">Выберите направление, подайте заявление онлайн, загрузите документы и отслеживайте статус заявки в личном кабинете.</p>
-            <div class="actions">
-                <a class="btn" href="{% url 'program_list' %}">Выбрать направление</a>
-                <a class="btn ghost" href="{% url 'register' %}">Создать кабинет</a>
+        <div>
+            <div class="hero-eyebrow">Прием 2026 открыт</div>
+            <h1>Поступление в<br><span>университет Витте</span><br>начинается здесь</h1>
+            <p class="hero-desc">
+                Выберите направление, подайте заявление онлайн, загрузите документы
+                и отслеживайте статус заявки в личном кабинете.
+            </p>
+            <div class="hero-btns">
+                <a class="btn btn-gold btn-lg" href="{% url 'program_list' %}">📚 Выбрать направление</a>
+                <a class="btn btn-ghost btn-lg" href="{% url 'register' %}">✍ Создать кабинет</a>
             </div>
         </div>
-        <div class="hero-panel" data-reveal>
-            <h2>Как работает сервис</h2>
-            <div class="grid">
-                <p><strong>1.</strong> Абитуриент изучает программы и сроки приема.</p>
-                <p><strong>2.</strong> Подает заявку и прикрепляет документы.</p>
-                <p><strong>3.</strong> Методист проверяет заявку, администратор видит общую статистику.</p>
+
+        <div class="hero-steps" data-reveal>
+            <h3>Как работает сервис</h3>
+            <div class="hero-step">
+                <div class="hero-step-num">1</div>
+                <div class="hero-step-text">
+                    <strong>Изучите программы</strong>
+                    Ознакомьтесь с направлениями, факультетами и условиями поступления.
+                </div>
+            </div>
+            <div class="hero-step">
+                <div class="hero-step-num">2</div>
+                <div class="hero-step-text">
+                    <strong>Подайте заявку</strong>
+                    Зарегистрируйтесь и прикрепите необходимые документы онлайн.
+                </div>
+            </div>
+            <div class="hero-step">
+                <div class="hero-step-num">3</div>
+                <div class="hero-step-text">
+                    <strong>Ожидайте решения</strong>
+                    Методист проверит заявку и уведомит о результате в кабинете.
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section">
-    <div class="container stats-grid">
-        <div class="stat"><strong>{{ programs_count }}</strong><span>активных направлений</span></div>
-        <div class="stat"><strong>{{ faculties_count }}</strong><span>факультетов</span></div>
-        <div class="stat"><strong>{{ campaigns_count }}</strong><span>приемных кампаний</span></div>
-        <div class="stat"><strong>{{ faq_count }}</strong><span>ответов для абитуриентов</span></div>
-    </div>
-</section>
-
-<section class="section compact">
+<!-- Stats -->
+<section class="section-xs" style="background: var(--surface); border-bottom: 1px solid var(--border);">
     <div class="container">
-        <div class="section-header">
-            <h2>Направления обучения</h2>
-            <a class="btn ghost" href="{% url 'program_list' %}">Все направления</a>
+        <div class="stats-row">
+            <div class="stat-item" data-reveal data-reveal-delay="1">
+                <span class="stat-value">{{ programs_count }}</span>
+                <span class="stat-label">активных направлений</span>
+            </div>
+            <div class="stat-item" data-reveal data-reveal-delay="2">
+                <span class="stat-value">{{ faculties_count }}</span>
+                <span class="stat-label">факультетов</span>
+            </div>
+            <div class="stat-item" data-reveal data-reveal-delay="3">
+                <span class="stat-value">{{ campaigns_count }}</span>
+                <span class="stat-label">активных кампаний</span>
+            </div>
+            <div class="stat-item" data-reveal data-reveal-delay="4">
+                <span class="stat-value">{{ faq_count }}</span>
+                <span class="stat-label">ответов для абитуриентов</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programs -->
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <div class="section-label">Образование</div>
+                <h2>Направления обучения</h2>
+            </div>
+            <a class="btn btn-outline" href="{% url 'program_list' %}">Все направления →</a>
         </div>
         <div class="card-grid">
             {% for program in programs %}
-                <article class="card" data-reveal>
-                    <span class="tag">{{ program.code }}</span>
+                <article class="card" data-reveal data-reveal-delay="{{ forloop.counter }}">
+                    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                        <span class="tag">{{ program.code }}</span>
+                        <span class="text-sm text-muted">{{ program.get_level_display }}</span>
+                    </div>
                     <h3>{{ program.name }}</h3>
-                    <p class="muted">{{ program.department.faculty.name }}</p>
-                    <p>{{ program.get_level_display }} · {{ program.get_form_display }}</p>
-                    <a class="btn secondary" href="{% url 'program_detail' program.pk %}">Подробнее</a>
+                    <p>{{ program.department.faculty.name }}</p>
+                    <p>{{ program.get_form_display }} · Бюджет: {{ program.budget_places }} мест</p>
+                    <div class="card-footer">
+                        <a class="btn btn-secondary btn-sm" href="{% url 'program_detail' program.pk %}">Подробнее →</a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Поступить</a>
+                    </div>
                 </article>
             {% empty %}
-                {% include 'core/partials/empty.html' %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">📚</div>
+                    <h3>Направления не найдены</h3>
+                    <p>Скоро будут добавлены актуальные направления обучения.</p>
+                </div>
             {% endfor %}
         </div>
     </div>
 </section>
 
+<!-- Features -->
+<section class="section" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+        <div class="section-head text-center" style="flex-direction: column; align-items: center;">
+            <div class="section-label">Возможности сервиса</div>
+            <h2>Всё для удобного поступления</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-reveal data-reveal-delay="1">
+                <div class="feature-icon">📝</div>
+                <h3>Онлайн-заявка</h3>
+                <p>Подайте заявление на поступление не выходя из дома — быстро и удобно.</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="2">
+                <div class="feature-icon">📎</div>
+                <h3>Загрузка документов</h3>
+                <p>Прикрепите все необходимые документы в электронном виде прямо из кабинета.</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="3">
+                <div class="feature-icon">🔔</div>
+                <h3>Отслеживание статуса</h3>
+                <p>Следите за статусом заявки в реальном времени — от подачи до зачисления.</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="4">
+                <div class="feature-icon">🏆</div>
+                <h3>Результаты экзаменов</h3>
+                <p>Просматривайте баллы вступительных испытаний в личном кабинете.</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="5">
+                <div class="feature-icon">📄</div>
+                <h3>Документы в DOCX/XLSX</h3>
+                <p>Скачайте сформированные документы и отчёты в удобных форматах.</p>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="6">
+                <div class="feature-icon">🛡</div>
+                <h3>Безопасность</h3>
+                <p>Ваши данные надёжно защищены. Доступ — только по вашим учётным данным.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News -->
 <section class="section">
     <div class="container">
-        <div class="section-header">
-            <h2>Новости приемной комиссии</h2>
-            <a class="btn ghost" href="{% url 'news_list' %}">Все новости</a>
+        <div class="section-head">
+            <div>
+                <div class="section-label">Актуально</div>
+                <h2>Новости приемной комиссии</h2>
+            </div>
+            <a class="btn btn-outline" href="{% url 'news_list' %}">Все новости →</a>
         </div>
         <div class="card-grid">
             {% for item in news %}
-                <article class="card" data-reveal>
-                    <p class="muted">{{ item.created_at|date:"d.m.Y" }}</p>
+                <article class="card" data-reveal data-reveal-delay="{{ forloop.counter }}">
+                    <p class="text-sm text-muted">📅 {{ item.created_at|date:"d.m.Y" }}</p>
                     <h3>{{ item.title }}</h3>
-                    <p>{{ item.content|truncatewords:24 }}</p>
-                    <a class="btn secondary" href="{% url 'news_detail' item.slug %}">Читать</a>
+                    <p>{{ item.content|truncatewords:28 }}</p>
+                    <div class="card-footer">
+                        <a class="btn btn-secondary btn-sm" href="{% url 'news_detail' item.slug %}">Читать →</a>
+                    </div>
                 </article>
             {% empty %}
-                {% include 'core/partials/empty.html' %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">📰</div>
+                    <h3>Новостей пока нет</h3>
+                    <p>Следите за обновлениями.</p>
+                </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
+<!-- CTA -->
+<section class="section-sm" style="background: linear-gradient(135deg, var(--navy), var(--navy-mid)); color: #fff;">
+    <div class="container text-center" style="padding: 20px 0;">
+        <div class="section-label" style="justify-content: center; color: var(--gold);">Начни сейчас</div>
+        <h2 style="color: #fff; margin-bottom: 16px;">Готов поступить в Витте?</h2>
+        <p style="color: rgba(255,255,255,.75); margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Зарегистрируйся за 2 минуты и подай заявку на выбранное направление обучения.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <a class="btn btn-gold btn-lg" href="{% url 'register' %}">✍ Зарегистрироваться</a>
+            <a class="btn btn-ghost btn-lg" href="{% url 'contact_list' %}">📞 Связаться с нами</a>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

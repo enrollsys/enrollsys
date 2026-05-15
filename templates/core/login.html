@@ -1,19 +1,34 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="container">
-    <div class="auth-card">
-        <h1>Вход в личный кабинет</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-grid">
-                <label class="field"><span>Логин</span><input class="form-control" name="username" autocomplete="username" required></label>
-                <label class="field"><span>Пароль</span><input class="form-control" type="password" name="password" autocomplete="current-password" required></label>
-            </div>
-            <div class="actions section compact">
-                <button type="submit">Войти</button>
-                <a class="btn ghost" href="{% url 'register' %}">Регистрация</a>
-            </div>
-        </form>
+<div style="background: linear-gradient(135deg, var(--navy), var(--navy-mid)); min-height: 100vh; padding: 40px 20px; margin-top: -1px;">
+    <div style="max-width: 420px; margin: 0 auto;">
+        <div class="auth-card" style="margin: 0;">
+            <div class="auth-logo">В</div>
+            <h1 style="text-align:center; margin-bottom:6px;">Вход в кабинет</h1>
+            <p class="text-muted text-center" style="margin-bottom:28px; font-size:14px;">Введите ваши данные для входа в систему</p>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="field">
+                        <span>Логин</span>
+                        <input class="form-control" name="username" autocomplete="username" required placeholder="Введите логин">
+                    </div>
+                    <div class="field">
+                        <span>Пароль</span>
+                        <input class="form-control" type="password" name="password" autocomplete="current-password" required placeholder="Введите пароль">
+                    </div>
+                </div>
+
+                <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
+                    <button type="submit" style="width:100%; justify-content:center;">🔑 Войти</button>
+                    <a class="btn btn-secondary" style="width:100%; justify-content:center;" href="{% url 'register' %}">Нет аккаунта? Зарегистрироваться</a>
+                </div>
+            </form>
+
+            <div class="form-sep" style="margin:20px 0 14px;">или</div>
+            <a class="btn btn-secondary" style="width:100%; justify-content:center;" href="{% url 'program_list' %}">📚 Просмотр направлений</a>
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

@@ -1,25 +1,70 @@
 {% extends 'core/base.html' %}
 {% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="section-label" style="color: var(--gold);">Образование</div>
+        <h1>Направления обучения</h1>
+        <p>Выберите программу и подайте заявку онлайн</p>
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
-        <div class="section-header">
-            <h1 class="page-title">Направления обучения</h1>
-            <a class="btn" href="{% url 'register' %}">Записаться</a>
+        <!-- Filter row -->
+        <div style="display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; align-items: center;">
+            <input class="form-control" style="max-width: 320px;" placeholder="🔍 Поиск по направлениям..." data-table-filter="programs-table">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-secondary btn-sm active" data-status-filter="all">Все</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="bachelor">Бакалавриат</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="master">Магистратура</button>
+                <button class="btn btn-secondary btn-sm" data-status-filter="specialist">Специалитет</button>
+            </div>
         </div>
-        <div class="card-grid">
+
+        <div class="card-grid" id="programs-table">
             {% for program in programs %}
-                <article class="card">
-                    <span class="tag">{{ program.code }}</span>
+                <article class="card" data-reveal data-reveal-delay="{{ forloop.counter0|divisibleby:3|yesno:'1,2,3' }}"
+                         data-status-row="{{ program.level }}">
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                        <span class="tag">{{ program.code }}</span>
+                        <span class="tag" style="background: var(--gold-light); color: var(--gold);">{{ program.get_level_display }}</span>
+                    </div>
                     <h3>{{ program.name }}</h3>
-                    <p class="muted">{{ program.department.faculty.name }} · {{ program.department.name }}</p>
-                    <p>{{ program.get_level_display }} · {{ program.get_form_display }}</p>
-                    <p>Бюджетные места: {{ program.budget_places }} · Платные места: {{ program.paid_places }}</p>
-                    <a class="btn secondary" href="{% url 'program_detail' program.pk %}">Подробнее</a>
+                    <p style="color: var(--text-muted); font-size: 13px; font-weight: 600;">
+                        🏛 {{ program.department.faculty.name }}
+                    </p>
+                    <p>{{ program.department.name }}</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;">
+                        <div class="stat" style="padding: 12px 14px; text-align: center;">
+                            <strong style="font-size: 22px;">{{ program.budget_places }}</strong>
+                            <span style="font-size: 11px;">Бюджет</span>
+                        </div>
+                        <div class="stat" style="padding: 12px 14px; text-align: center;">
+                            <strong style="font-size: 22px;">{{ program.paid_places }}</strong>
+                            <span style="font-size: 11px;">Платных</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted);">
+                        🕐 {{ program.get_form_display }}
+                    </div>
+
+                    <div class="card-footer">
+                        <a class="btn btn-secondary btn-sm" href="{% url 'program_detail' program.pk %}">Подробнее</a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Поступить</a>
+                    </div>
                 </article>
             {% empty %}
-                {% include 'core/partials/empty.html' %}
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">📚</div>
+                    <h3>Направления не найдены</h3>
+                    <p>Скоро будут добавлены актуальные программы обучения.</p>
+                </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
 {% endblock %}

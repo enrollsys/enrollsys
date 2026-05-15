@@ -1,14 +1,35 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Документы заявок</h1></div>
-    <div class="table-card"><table><thead><tr><th>Заявка</th><th>Абитуриент</th><th>Тип</th><th>Дата</th><th></th></tr></thead><tbody>
-    {% for doc in documents %}
-        <tr><td>#{{ doc.application.pk }}</td><td>{{ doc.application.applicant.get_full_name|default:doc.application.applicant.username }}</td><td>{{ doc.get_doc_type_display }}</td><td>{{ doc.uploaded_at|date:"d.m.Y" }}</td><td><a class="btn secondary" href="{% url 'download_document' doc.pk %}">Скачать</a></td></tr>
-    {% empty %}
-        <tr><td colspan="5">Файлов нет.</td></tr>
-    {% endfor %}
-    </tbody></table></div>
-</div></section>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="margin-bottom:28px;"><div class="section-label">Кабинет методиста</div><h1 class="page-title">Документы на проверку</h1></div>
+            {% if documents %}
+            <div class="table-card">
+                <table>
+                    <thead><tr><th>Документ</th><th>Абитуриент</th><th>Заявка</th><th>Дата загрузки</th><th>Статус</th><th></th></tr></thead>
+                    <tbody>
+                        {% for doc in documents %}
+                        <tr>
+                            <td><div style="display:flex; align-items:center; gap:8px;"><span>📎</span><strong>{{ doc.get_doc_type_display }}</strong></div></td>
+                            <td>{{ doc.application.applicant.get_full_name|default:doc.application.applicant.username }}</td>
+                            <td><a href="{% url 'application_review' doc.application.pk %}" style="color:var(--teal); font-weight:600;">#{{ doc.application.pk }}</a></td>
+                            <td class="text-sm text-muted">{{ doc.uploaded_at|date:"d.m.Y H:i" }}</td>
+                            <td>{% if doc.is_verified %}<span class="status status-accepted">✅ Проверен</span>{% else %}<span class="status status-submitted">⏳ Ожидает</span>{% endif %}</td>
+                            <td style="display:flex; gap:8px; flex-wrap:wrap;">
+                                {% if not doc.is_verified %}<form method="post" action="{% url 'verify_document' doc.pk %}">{% csrf_token %}<button class="btn btn-primary btn-sm" type="submit">✅ Подтвердить</button></form>{% endif %}
+                                <a class="btn btn-secondary btn-sm" href="{% url 'download_document' doc.pk %}">📥</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state"><div class="empty-icon">📎</div><h3>Документов нет</h3><p>Загруженные документы появятся здесь.</p></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

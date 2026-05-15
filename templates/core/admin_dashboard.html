@@ -1,20 +1,85 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<section class="section"><div class="container">
-    {% include 'core/partials/dashboard_nav.html' %}
-    <div class="section-header"><h1 class="page-title">Панель администратора</h1><a class="btn" href="{% url 'export_applications_xlsx' %}">Выгрузить заявки</a></div>
-    <div class="stats-grid">
-        <div class="stat"><strong>{{ stats.total_users }}</strong><span>пользователей</span></div>
-        <div class="stat"><strong>{{ stats.total_applications }}</strong><span>заявок</span></div>
-        <div class="stat"><strong>{{ stats.active_programs }}</strong><span>активных направлений</span></div>
-        <div class="stat"><strong>{{ stats.documents }}</strong><span>файлов</span></div>
+<div class="container">
+    <div class="dashboard-layout">
+        {% include 'core/partials/dashboard_nav.html' %}
+        <div class="dashboard-content">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap;">
+                <div>
+                    <div class="section-label">Управление системой</div>
+                    <h1 class="page-title">Панель администратора</h1>
+                </div>
+                <a class="btn btn-primary" href="{% url 'export_applications_xlsx' %}">📥 Выгрузить XLSX</a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" style="margin-bottom:28px;">
+                <div class="stat" data-reveal data-reveal-delay="1">
+                    <strong>{{ stats.total_users }}</strong>
+                    <span>Пользователей</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="2">
+                    <strong>{{ stats.total_applications }}</strong>
+                    <span>Заявок</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="3">
+                    <strong>{{ stats.active_programs }}</strong>
+                    <span>Направлений</span>
+                </div>
+                <div class="stat" data-reveal data-reveal-delay="4">
+                    <strong>{{ stats.documents }}</strong>
+                    <span>Документов</span>
+                </div>
+            </div>
+
+            <!-- Quick access cards -->
+            <div class="dashboard-grid">
+                <a class="card" href="{% url 'admin_users' %}" data-reveal data-reveal-delay="1">
+                    <div class="card-icon">👥</div>
+                    <h3>Пользователи</h3>
+                    <p>Управление учётными записями и ролями пользователей системы.</p>
+                </a>
+                <a class="card" href="{% url 'admin_applications' %}" data-reveal data-reveal-delay="2">
+                    <div class="card-icon">📝</div>
+                    <h3>Заявки</h3>
+                    <p>Просмотр и управление всеми заявками абитуриентов.</p>
+                </a>
+                <a class="card" href="{% url 'admin_programs' %}" data-reveal data-reveal-delay="3">
+                    <div class="card-icon">📚</div>
+                    <h3>Направления</h3>
+                    <p>Образовательные программы и их параметры.</p>
+                </a>
+                <a class="card" href="{% url 'admin_campaigns' %}" data-reveal data-reveal-delay="4">
+                    <div class="card-icon">📅</div>
+                    <h3>Кампании</h3>
+                    <p>Управление сроками и статусами приёмных кампаний.</p>
+                </a>
+                <a class="card" href="{% url 'admin_reports' %}" data-reveal data-reveal-delay="5">
+                    <div class="card-icon">📊</div>
+                    <h3>Отчёты</h3>
+                    <p>Сформированные документы и статистика приёма.</p>
+                </a>
+                <a class="card" href="{% url 'export_applications_xlsx' %}" data-reveal data-reveal-delay="6">
+                    <div class="card-icon">📥</div>
+                    <h3>Выгрузка XLSX</h3>
+                    <p>Экспорт реестра заявок в формате Microsoft Excel.</p>
+                </a>
+            </div>
+
+            <!-- Active campaign status -->
+            {% if stats.active_campaigns %}
+            <div class="panel" style="margin-top:24px; border-color:var(--green); background:var(--green-light);">
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                    <span style="font-size:24px;">✅</span>
+                    <div>
+                        <div style="font-weight:700; color:var(--green);">{{ stats.active_campaigns }} активная приёмная кампания</div>
+                        <div style="font-size:14px; color:var(--text-muted);">Приём заявок ведётся в штатном режиме.</div>
+                    </div>
+                    <a class="btn btn-secondary btn-sm" style="margin-left:auto;" href="{% url 'admin_campaigns' %}">Управление кампаниями</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
     </div>
-    <div class="dashboard-grid section compact">
-        <a class="card" href="{% url 'admin_users' %}"><h3>Пользователи</h3><p>Учетные записи и роли.</p></a>
-        <a class="card" href="{% url 'admin_applications' %}"><h3>Заявки</h3><p>Все заявки системы.</p></a>
-        <a class="card" href="{% url 'admin_programs' %}"><h3>Направления</h3><p>Образовательные программы.</p></a>
-        <a class="card" href="{% url 'admin_campaigns' %}"><h3>Кампании</h3><p>Сроки приема.</p></a>
-        <a class="card" href="{% url 'admin_reports' %}"><h3>Отчеты</h3><p>Сформированные файлы.</p></a>
-    </div>
-</div></section>
+</div>
 {% endblock %}
