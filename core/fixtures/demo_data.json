@@ -1,11 +1,181 @@
 [
   {
+    "model": "auth.user",
+    "pk": 101,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$enrollsysdemo$4BW9tI9b23wgDlcDbyY+J8y+yxQxOYYfOoBYvyREo5M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "ivanov",
+      "first_name": "Иван",
+      "last_name": "Иванов",
+      "email": "ivanov@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-01T09:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 102,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$enrollsysdemo$4BW9tI9b23wgDlcDbyY+J8y+yxQxOYYfOoBYvyREo5M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "petrova",
+      "first_name": "Анна",
+      "last_name": "Петрова",
+      "email": "petrova@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-02T10:15:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 103,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$enrollsysdemo$4BW9tI9b23wgDlcDbyY+J8y+yxQxOYYfOoBYvyREo5M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "sidorov",
+      "first_name": "Дмитрий",
+      "last_name": "Сидоров",
+      "email": "sidorov@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-03T11:30:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 104,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$enrollsysdemo$4BW9tI9b23wgDlcDbyY+J8y+yxQxOYYfOoBYvyREo5M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "smirnova",
+      "first_name": "Екатерина",
+      "last_name": "Смирнова",
+      "email": "smirnova@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-04T12:45:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 150,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$enrollsysdemo$4BW9tI9b23wgDlcDbyY+J8y+yxQxOYYfOoBYvyREo5M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "metodist",
+      "first_name": "Марина",
+      "last_name": "Кузнецова",
+      "email": "metodist@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-05-01T08:30:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.userprofile",
+    "pk": 101,
+    "fields": {
+      "user": 101,
+      "role": "applicant",
+      "phone": "+7 (916) 100-10-01",
+      "created_at": "2026-05-01T09:00:00Z"
+    }
+  },
+  {
+    "model": "core.userprofile",
+    "pk": 102,
+    "fields": {
+      "user": 102,
+      "role": "applicant",
+      "phone": "+7 (916) 100-10-02",
+      "created_at": "2026-05-02T10:15:00Z"
+    }
+  },
+  {
+    "model": "core.userprofile",
+    "pk": 103,
+    "fields": {
+      "user": 103,
+      "role": "applicant",
+      "phone": "+7 (916) 100-10-03",
+      "created_at": "2026-05-03T11:30:00Z"
+    }
+  },
+  {
+    "model": "core.userprofile",
+    "pk": 104,
+    "fields": {
+      "user": 104,
+      "role": "applicant",
+      "phone": "+7 (916) 100-10-04",
+      "created_at": "2026-05-04T12:45:00Z"
+    }
+  },
+  {
+    "model": "core.userprofile",
+    "pk": 150,
+    "fields": {
+      "user": 150,
+      "role": "methodist",
+      "phone": "+7 (495) 780-39-92",
+      "created_at": "2026-05-01T08:30:00Z"
+    }
+  },
+  {
     "model": "core.faculty",
     "pk": 1,
     "fields": {
       "name": "Факультет экономики и финансов",
       "short_name": "ФЭФ",
-      "description": "Подготовка специалистов в области экономики, финансов и учета.",
+      "description": "Подготовка специалистов в области экономики, финансов, учета, аудита и аналитики.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 2,
+    "fields": {
+      "name": "Факультет управления",
+      "short_name": "ФУ",
+      "description": "Программы для будущих руководителей, проектных менеджеров и специалистов государственного управления.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 3,
+    "fields": {
+      "name": "Юридический факультет",
+      "short_name": "ЮФ",
+      "description": "Практико-ориентированная подготовка юристов для бизнеса, государства и социальной сферы.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 4,
+    "fields": {
+      "name": "Факультет информационных технологий",
+      "short_name": "ФИТ",
+      "description": "Цифровые продукты, прикладная информатика, информационная безопасность и анализ данных.",
       "is_active": true
     }
   },
@@ -16,7 +186,73 @@
       "faculty": 1,
       "name": "Кафедра экономики",
       "short_name": "КЭ",
-      "description": "Экономика, финансы и аналитика.",
+      "description": "Экономика организаций, финансовое планирование и бизнес-аналитика.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 2,
+    "fields": {
+      "faculty": 1,
+      "name": "Кафедра финансов и учета",
+      "short_name": "КФУ",
+      "description": "Финансы, бухгалтерский учет, аудит и налоговое консультирование.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 3,
+    "fields": {
+      "faculty": 2,
+      "name": "Кафедра менеджмента",
+      "short_name": "КМ",
+      "description": "Управление командами, проектами и развитием организаций.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 4,
+    "fields": {
+      "faculty": 2,
+      "name": "Кафедра государственного и муниципального управления",
+      "short_name": "КГМУ",
+      "description": "Управленческие технологии для публичного сектора и некоммерческих организаций.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 5,
+    "fields": {
+      "faculty": 3,
+      "name": "Кафедра гражданского и предпринимательского права",
+      "short_name": "КГПП",
+      "description": "Правовое сопровождение бизнеса, договорная работа и судебная практика.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 6,
+    "fields": {
+      "faculty": 4,
+      "name": "Кафедра прикладной информатики",
+      "short_name": "КПИ",
+      "description": "Разработка цифровых сервисов, аналитика данных и управление ИТ-проектами.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 7,
+    "fields": {
+      "faculty": 4,
+      "name": "Кафедра информационной безопасности",
+      "short_name": "КИБ",
+      "description": "Защита информации, безопасность сетей и управление рисками.",
       "is_active": true
     }
   },
@@ -31,7 +267,142 @@
       "form": "full_time",
       "budget_places": 15,
       "paid_places": 80,
-      "description": "Профиль для будущих экономистов и финансовых аналитиков.",
+      "description": "Профиль для будущих экономистов, финансовых аналитиков и специалистов по оценке эффективности бизнеса.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 2,
+    "fields": {
+      "department": 3,
+      "name": "Менеджмент",
+      "code": "38.03.02",
+      "level": "bachelor",
+      "form": "distance",
+      "budget_places": 10,
+      "paid_places": 100,
+      "description": "Подготовка управленцев для бизнеса, проектных офисов и государственных организаций.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 3,
+    "fields": {
+      "department": 4,
+      "name": "Государственное и муниципальное управление",
+      "code": "38.03.04",
+      "level": "bachelor",
+      "form": "part_time",
+      "budget_places": 8,
+      "paid_places": 70,
+      "description": "Программа для тех, кто планирует карьеру в органах власти, МФЦ, общественных и проектных структурах.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 4,
+    "fields": {
+      "department": 5,
+      "name": "Юриспруденция",
+      "code": "40.03.01",
+      "level": "bachelor",
+      "form": "full_time",
+      "budget_places": 12,
+      "paid_places": 90,
+      "description": "Базовая юридическая подготовка с акцентом на гражданское, предпринимательское и цифровое право.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 5,
+    "fields": {
+      "department": 6,
+      "name": "Прикладная информатика",
+      "code": "09.03.03",
+      "level": "bachelor",
+      "form": "full_time",
+      "budget_places": 10,
+      "paid_places": 75,
+      "description": "Проектирование информационных систем, веб-сервисов и аналитических решений для бизнеса.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 6,
+    "fields": {
+      "department": 7,
+      "name": "Информационная безопасность автоматизированных систем",
+      "code": "10.05.05",
+      "level": "specialist",
+      "form": "full_time",
+      "budget_places": 5,
+      "paid_places": 45,
+      "description": "Специалитет для будущих инженеров по защите информации, аудиту безопасности и реагированию на инциденты.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 7,
+    "fields": {
+      "department": 2,
+      "name": "Финансовая аналитика и контроллинг",
+      "code": "38.04.01",
+      "level": "master",
+      "form": "distance",
+      "budget_places": 6,
+      "paid_places": 55,
+      "description": "Магистерская программа по финансовому моделированию, управленческому учету и оценке инвестиционных проектов.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 8,
+    "fields": {
+      "department": 3,
+      "name": "Стратегический менеджмент",
+      "code": "38.04.02",
+      "level": "master",
+      "form": "part_time",
+      "budget_places": 6,
+      "paid_places": 60,
+      "description": "Для специалистов, которые хотят управлять продуктами, командами и организационными изменениями.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 9,
+    "fields": {
+      "department": 5,
+      "name": "Правовое сопровождение бизнеса",
+      "code": "40.04.01",
+      "level": "master",
+      "form": "distance",
+      "budget_places": 4,
+      "paid_places": 40,
+      "description": "Магистратура для юристов, сопровождающих сделки, корпоративные процедуры и претензионную работу.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.studyprogram",
+    "pk": 10,
+    "fields": {
+      "department": 6,
+      "name": "Управление цифровыми продуктами",
+      "code": "09.04.03",
+      "level": "master",
+      "form": "part_time",
+      "budget_places": 4,
+      "paid_places": 45,
+      "description": "Магистерская программа о продуктовой аналитике, UX-исследованиях и управлении разработкой цифровых сервисов.",
       "is_active": true
     }
   },
@@ -43,7 +414,177 @@
       "start_date": "2026-06-01",
       "end_date": "2026-08-25",
       "status": "active",
-      "description": "Основная приемная кампания 2026 года."
+      "description": "Основная приемная кампания 2026 года: бакалавриат, специалитет и магистратура."
+    }
+  },
+  {
+    "model": "core.admissioncampaign",
+    "pk": 2,
+    "fields": {
+      "year": 2027,
+      "start_date": "2027-06-01",
+      "end_date": "2027-08-24",
+      "status": "planned",
+      "description": "Предварительный график приема на 2027 учебный год."
+    }
+  },
+  {
+    "model": "core.admissioncampaign",
+    "pk": 3,
+    "fields": {
+      "year": 2025,
+      "start_date": "2025-06-03",
+      "end_date": "2025-08-26",
+      "status": "closed",
+      "description": "Архивная приемная кампания 2025 года."
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 1,
+    "fields": {
+      "program": 1,
+      "name": "Экономика: математика",
+      "exam_type": "written",
+      "date": "2026-07-12",
+      "location": "Корпус А, аудитория 204",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 2,
+    "fields": {
+      "program": 1,
+      "name": "Экономика: русский язык",
+      "exam_type": "written",
+      "date": "2026-07-14",
+      "location": "Корпус А, аудитория 205",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 3,
+    "fields": {
+      "program": 4,
+      "name": "Юриспруденция: обществознание",
+      "exam_type": "combined",
+      "date": "2026-07-16",
+      "location": "Корпус Б, аудитория 302",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 4,
+    "fields": {
+      "program": 5,
+      "name": "Прикладная информатика: информатика",
+      "exam_type": "written",
+      "date": "2026-07-18",
+      "location": "Компьютерный класс 1",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 5,
+    "fields": {
+      "program": 8,
+      "name": "Стратегический менеджмент: собеседование",
+      "exam_type": "oral",
+      "date": "2026-07-20",
+      "location": "Онлайн-комната приемной комиссии",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.exam",
+    "pk": 6,
+    "fields": {
+      "program": 6,
+      "name": "Информационная безопасность: профильное испытание",
+      "exam_type": "combined",
+      "date": "2026-07-22",
+      "location": "Компьютерный класс 2",
+      "max_score": 100,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.news",
+    "pk": 1,
+    "fields": {
+      "title": "Открыт прием документов на 2026 год",
+      "slug": "opened-admission-2026",
+      "content": "Абитуриенты могут подать заявление через личный кабинет, выбрать направление подготовки и загрузить документы онлайн. Приемная комиссия проверяет заявки в рабочие дни.",
+      "image": "",
+      "is_published": true,
+      "created_at": "2026-05-10T08:00:00Z",
+      "updated_at": "2026-05-10T08:00:00Z",
+      "author": 150
+    }
+  },
+  {
+    "model": "core.news",
+    "pk": 2,
+    "fields": {
+      "title": "Опубликовано расписание вступительных испытаний",
+      "slug": "exam-schedule-2026",
+      "content": "На странице сроков приема доступно расписание вступительных испытаний по ключевым направлениям. Просим абитуриентов заранее проверить дату, формат и место проведения экзамена.",
+      "image": "",
+      "is_published": true,
+      "created_at": "2026-05-11T09:00:00Z",
+      "updated_at": "2026-05-11T09:00:00Z",
+      "author": 150
+    }
+  },
+  {
+    "model": "core.news",
+    "pk": 3,
+    "fields": {
+      "title": "Добавлены шаблоны заявлений и согласий",
+      "slug": "document-templates-2026",
+      "content": "В разделе документов появились актуальные шаблоны заявления, согласия на обработку персональных данных и памятка абитуриента. Файлы можно скачать до подачи заявки.",
+      "image": "",
+      "is_published": true,
+      "created_at": "2026-05-12T10:00:00Z",
+      "updated_at": "2026-05-12T10:00:00Z",
+      "author": 150
+    }
+  },
+  {
+    "model": "core.news",
+    "pk": 4,
+    "fields": {
+      "title": "Методисты начали проверку первых заявок",
+      "slug": "applications-review-started",
+      "content": "Первые заявления уже поступили в систему. Статус каждой заявки отображается в личном кабинете абитуриента и обновляется после проверки документов.",
+      "image": "",
+      "is_published": true,
+      "created_at": "2026-05-13T11:00:00Z",
+      "updated_at": "2026-05-13T11:00:00Z",
+      "author": 150
+    }
+  },
+  {
+    "model": "core.news",
+    "pk": 5,
+    "fields": {
+      "title": "Консультации приемной комиссии доступны онлайн",
+      "slug": "online-consultations-2026",
+      "content": "Абитуриенты могут обратиться в приемную комиссию по телефону, электронной почте или через онлайн-консультацию. Специалисты помогут выбрать программу и разобраться с документами.",
+      "image": "",
+      "is_published": true,
+      "created_at": "2026-05-14T12:00:00Z",
+      "updated_at": "2026-05-14T12:00:00Z",
+      "author": 150
     }
   },
   {
@@ -51,8 +592,78 @@
     "pk": 1,
     "fields": {
       "question": "Как подать заявление?",
-      "answer": "Создайте личный кабинет, выберите направление и отправьте заявку.",
+      "answer": "Создайте личный кабинет, выберите направление подготовки и отправьте заявку. После отправки она появится у методиста на проверке.",
       "order": 1,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 2,
+    "fields": {
+      "question": "Можно ли загрузить документы онлайн?",
+      "answer": "Да, документы прикрепляются к конкретной заявке в личном кабинете. Методист увидит их в разделе проверки документов.",
+      "order": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 3,
+    "fields": {
+      "question": "Как узнать статус заявки?",
+      "answer": "Статус заявки отображается в личном кабинете абитуриента: подана, на рассмотрении, принята или отклонена.",
+      "order": 3,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 4,
+    "fields": {
+      "question": "Нужны ли оригиналы документов?",
+      "answer": "Для предварительной проверки достаточно электронных копий. Оригиналы предоставляются в приемную комиссию в сроки, указанные в правилах приема.",
+      "order": 4,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 5,
+    "fields": {
+      "question": "Можно ли подать несколько заявок?",
+      "answer": "Да, абитуриент может подать заявки на несколько программ, если это не противоречит правилам текущей приемной кампании.",
+      "order": 5,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 6,
+    "fields": {
+      "question": "Где посмотреть вступительные испытания?",
+      "answer": "Актуальные даты, аудитории и форматы испытаний размещены в разделе «Сроки и расписание».",
+      "order": 6,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 7,
+    "fields": {
+      "question": "Как связаться с приемной комиссией?",
+      "answer": "Контакты, телефон, email и часы работы опубликованы на странице «Контакты».",
+      "order": 7,
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.faq",
+    "pk": 8,
+    "fields": {
+      "question": "Когда появятся результаты экзаменов?",
+      "answer": "После проверки методист внесет результаты в систему, и они появятся в личном кабинете абитуриента.",
+      "order": 8,
       "is_active": true
     }
   },
@@ -66,6 +677,316 @@
       "address": "Москва, 2-й Кожуховский проезд, 12",
       "office_hours": "Пн-Пт 10:00-18:00",
       "is_active": true
+    }
+  },
+  {
+    "model": "core.contact",
+    "pk": 2,
+    "fields": {
+      "name": "Консультации по документам",
+      "email": "docs@muiv.ru",
+      "phone": "+7 (495) 780-39-92",
+      "address": "Москва, 2-й Кожуховский проезд, 12, кабинет 114",
+      "office_hours": "Пн-Пт 10:00-17:00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.contact",
+    "pk": 3,
+    "fields": {
+      "name": "Вступительные испытания",
+      "email": "exam@muiv.ru",
+      "phone": "+7 (495) 780-39-93",
+      "address": "Москва, 2-й Кожуховский проезд, 12, аудитория 205",
+      "office_hours": "Пн-Сб 09:30-18:30",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.contact",
+    "pk": 4,
+    "fields": {
+      "name": "Техническая поддержка личного кабинета",
+      "email": "support@muiv.ru",
+      "phone": "+7 (495) 780-39-94",
+      "address": "Онлайн-поддержка",
+      "office_hours": "Ежедневно 09:00-21:00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttemplate",
+    "pk": 1,
+    "fields": {
+      "name": "Заявление абитуриента",
+      "file": "templates/anketa-abiturienta.docx",
+      "doc_format": "docx",
+      "description": "Бланк заявления для подачи документов на выбранную программу.",
+      "created_at": "2026-05-10T08:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttemplate",
+    "pk": 2,
+    "fields": {
+      "name": "Согласие на обработку персональных данных",
+      "file": "templates/soglasie-personalnye-dannye.docx",
+      "doc_format": "docx",
+      "description": "Шаблон согласия для заполнения перед загрузкой документов.",
+      "created_at": "2026-05-10T08:35:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttemplate",
+    "pk": 3,
+    "fields": {
+      "name": "Памятка абитуриента",
+      "file": "templates/pamyatka-abiturienta.xlsx",
+      "doc_format": "xlsx",
+      "description": "Календарь ключевых дат и контрольный список документов.",
+      "created_at": "2026-05-10T08:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 1,
+    "fields": {
+      "applicant": 101,
+      "campaign": 1,
+      "program": 1,
+      "status": "under_review",
+      "created_at": "2026-05-11T08:15:00Z",
+      "updated_at": "2026-05-13T09:20:00Z",
+      "comment": "Прошу рассмотреть заявку на очную форму обучения. Документы загружены."
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 2,
+    "fields": {
+      "applicant": 102,
+      "campaign": 1,
+      "program": 4,
+      "status": "submitted",
+      "created_at": "2026-05-12T10:10:00Z",
+      "updated_at": "2026-05-12T10:10:00Z",
+      "comment": "Интересует возможность участия во вступительном испытании онлайн."
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 3,
+    "fields": {
+      "applicant": 103,
+      "campaign": 1,
+      "program": 5,
+      "status": "accepted",
+      "created_at": "2026-05-12T13:35:00Z",
+      "updated_at": "2026-05-14T15:10:00Z",
+      "comment": "Все документы проверены, заявление принято."
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 4,
+    "fields": {
+      "applicant": 104,
+      "campaign": 1,
+      "program": 8,
+      "status": "rejected",
+      "created_at": "2026-05-13T09:45:00Z",
+      "updated_at": "2026-05-14T16:30:00Z",
+      "comment": "Необходимо повторно подать документы после исправления данных."
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 5,
+    "fields": {
+      "applicant": 101,
+      "campaign": 1,
+      "program": 7,
+      "status": "draft",
+      "created_at": "2026-05-14T08:25:00Z",
+      "updated_at": "2026-05-14T08:25:00Z",
+      "comment": "Черновик второй заявки."
+    }
+  },
+  {
+    "model": "core.application",
+    "pk": 6,
+    "fields": {
+      "applicant": 103,
+      "campaign": 1,
+      "program": 6,
+      "status": "submitted",
+      "created_at": "2026-05-14T12:00:00Z",
+      "updated_at": "2026-05-14T12:00:00Z",
+      "comment": "Дополнительная заявка на специалитет."
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 1,
+    "fields": {
+      "application": 1,
+      "doc_type": "passport",
+      "file": "applications/demo/ivanov-passport.pdf",
+      "uploaded_at": "2026-05-11T08:20:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 2,
+    "fields": {
+      "application": 1,
+      "doc_type": "diploma",
+      "file": "applications/demo/ivanov-attestat.pdf",
+      "uploaded_at": "2026-05-11T08:22:00Z",
+      "is_verified": false
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 3,
+    "fields": {
+      "application": 2,
+      "doc_type": "passport",
+      "file": "applications/demo/petrova-passport.pdf",
+      "uploaded_at": "2026-05-12T10:20:00Z",
+      "is_verified": false
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 4,
+    "fields": {
+      "application": 2,
+      "doc_type": "certificate",
+      "file": "applications/demo/petrova-ege.pdf",
+      "uploaded_at": "2026-05-12T10:24:00Z",
+      "is_verified": false
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 5,
+    "fields": {
+      "application": 3,
+      "doc_type": "passport",
+      "file": "applications/demo/sidorov-passport.pdf",
+      "uploaded_at": "2026-05-12T13:40:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 6,
+    "fields": {
+      "application": 3,
+      "doc_type": "diploma",
+      "file": "applications/demo/sidorov-attestat.pdf",
+      "uploaded_at": "2026-05-12T13:45:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 7,
+    "fields": {
+      "application": 4,
+      "doc_type": "passport",
+      "file": "applications/demo/smirnova-passport.pdf",
+      "uploaded_at": "2026-05-13T09:50:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.applicationdocument",
+    "pk": 8,
+    "fields": {
+      "application": 6,
+      "doc_type": "certificate",
+      "file": "applications/demo/sidorov-certificate.pdf",
+      "uploaded_at": "2026-05-14T12:05:00Z",
+      "is_verified": false
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 1,
+    "fields": {
+      "application": 1,
+      "exam": 1,
+      "score": 86,
+      "notes": "Уверенное решение расчетных задач.",
+      "recorded_at": "2026-07-12T14:30:00Z",
+      "recorded_by": 150
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 2,
+    "fields": {
+      "application": 1,
+      "exam": 2,
+      "score": 78,
+      "notes": "Минимальный порог пройден.",
+      "recorded_at": "2026-07-14T14:30:00Z",
+      "recorded_by": 150
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 3,
+    "fields": {
+      "application": 2,
+      "exam": 3,
+      "score": 91,
+      "notes": "Высокий результат по обществознанию.",
+      "recorded_at": "2026-07-16T15:00:00Z",
+      "recorded_by": 150
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 4,
+    "fields": {
+      "application": 3,
+      "exam": 4,
+      "score": 93,
+      "notes": "Отличная практическая часть.",
+      "recorded_at": "2026-07-18T15:30:00Z",
+      "recorded_by": 150
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 5,
+    "fields": {
+      "application": 4,
+      "exam": 5,
+      "score": 64,
+      "notes": "Рекомендована повторная консультация перед новой подачей.",
+      "recorded_at": "2026-07-20T13:30:00Z",
+      "recorded_by": 150
+    }
+  },
+  {
+    "model": "core.examresult",
+    "pk": 6,
+    "fields": {
+      "application": 6,
+      "exam": 6,
+      "score": 88,
+      "notes": "Хорошее владение базовыми принципами безопасности.",
+      "recorded_at": "2026-07-22T16:15:00Z",
+      "recorded_by": 150
     }
   }
 ]

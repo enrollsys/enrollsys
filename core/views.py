@@ -37,11 +37,16 @@ from .utils import generate_docx, generate_xlsx, serve_generated_file
 
 
 def has_role(user, roles):
-    return (
-        user.is_authenticated
-        and hasattr(user, "profile")
-        and user.profile.role in roles
-    )
+    """
+    Check if the user has one of the specified roles.
+    Superusers are always treated as 'admin'.
+    """
+    if not user.is_authenticated:
+        return False
+    # Django superusers automatically get admin access
+    if user.is_superuser and "admin" in roles:
+        return True
+    return hasattr(user, "profile") and user.profile.role in roles
 
 
 def dashboard_redirect(user):
