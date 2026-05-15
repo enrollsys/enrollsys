@@ -1,12 +1,12 @@
 {% csrf_token %}
 <div style="display:flex; flex-direction:column; gap:16px;">
 {% for field in form %}
-    <div class="field {% if field.field.widget.attrs.type == 'checkbox' or field.field.widget.__class__.__name__ == 'CheckboxInput' %}check-field{% endif %}">
-        {% if field.field.widget.__class__.__name__ != 'CheckboxInput' %}
+    <div class="field {% if field.field.widget.input_type == 'checkbox' %}check-field{% endif %}">
+        {% if field.field.widget.input_type != 'checkbox' %}
             <span>{{ field.label }}{% if field.field.required %} <span style="color:var(--accent);">*</span>{% endif %}</span>
         {% endif %}
         {{ field }}
-        {% if field.field.widget.__class__.__name__ == 'CheckboxInput' %}
+        {% if field.field.widget.input_type == 'checkbox' %}
             <span>{{ field.label }}</span>
         {% endif %}
         {% if field.help_text %}
