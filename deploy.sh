@@ -13,6 +13,8 @@ export DB_HOST="${DB_HOST:-amvera-enrollsys1-cnpg-enrollsys-db-rw}"
 export DB_PORT="${DB_PORT:-5432}"
 
 python manage.py migrate --noinput
+python manage.py loaddata core/fixtures/demo_data.json
+python manage.py ensure_admin_user
 python manage.py collectstatic --noinput
 
 gunicorn app.wsgi:application --bind 0.0.0.0:80 --workers 3 --timeout 120

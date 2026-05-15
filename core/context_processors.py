@@ -8,5 +8,5 @@ def site_context(request):
             role = request.user.profile.role
     return {
         "current_role": role,
-        "site_name": "Приемная комиссия МУ им. С.Ю. Витте",
+        "site_name": "Управление организацией приема",
     }

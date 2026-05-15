@@ -5,9 +5,9 @@
             <div>
                 <div class="sidebar-user-name">{{ user.get_full_name|default:user.username }}</div>
                 <div class="sidebar-user-role">
-                    {% if current_role == 'admin' %}⚙ Администратор
-                    {% elif current_role == 'methodist' %}📋 Методист
-                    {% else %}👤 Абитуриент{% endif %}
+                    {% if current_role == 'admin' %}Администратор
+                    {% elif current_role == 'methodist' %}Методист
+                    {% else %}Абитуриент{% endif %}
                 </div>
             </div>
         </div>
@@ -17,88 +17,88 @@
         {% if current_role == 'admin' %}
             <div class="sidebar-section-label">Управление</div>
             <a class="sidebar-nav-item" href="{% url 'admin_dashboard' %}">
-                <span class="sidebar-nav-icon">📊</span> Обзор
+                Обзор
             </a>
             <a class="sidebar-nav-item" href="{% url 'admin_users' %}">
-                <span class="sidebar-nav-icon">👥</span> Пользователи
+                Пользователи
             </a>
             <a class="sidebar-nav-item" href="{% url 'admin_applications' %}">
-                <span class="sidebar-nav-icon">📝</span> Заявки
+                Заявки
             </a>
             <a class="sidebar-nav-item" href="{% url 'admin_programs' %}">
-                <span class="sidebar-nav-icon">📚</span> Направления
+                Направления
             </a>
             <a class="sidebar-nav-item" href="{% url 'admin_campaigns' %}">
-                <span class="sidebar-nav-icon">📅</span> Кампании
+                Кампании
             </a>
             <a class="sidebar-nav-item" href="{% url 'admin_reports' %}">
-                <span class="sidebar-nav-icon">📊</span> Отчёты
+                Отчёты
             </a>
             <div class="sidebar-sep"></div>
             <div class="sidebar-section-label">Инструменты</div>
             <a class="sidebar-nav-item" href="{% url 'export_applications_xlsx' %}">
-                <span class="sidebar-nav-icon">📥</span> Выгрузка XLSX
+                Выгрузка XLSX
             </a>
             <a class="sidebar-nav-item" href="{% url 'profile_edit' %}">
-                <span class="sidebar-nav-icon">⚙</span> Профиль
+                Профиль
             </a>
             <a class="sidebar-nav-item" href="{% url 'logout' %}">
-                <span class="sidebar-nav-icon">🚪</span> Выйти
+                Выйти
             </a>
 
         {% elif current_role == 'methodist' %}
             <div class="sidebar-section-label">Работа с заявками</div>
             <a class="sidebar-nav-item" href="{% url 'methodist_dashboard' %}">
-                <span class="sidebar-nav-icon">📊</span> Обзор
+                Обзор
             </a>
             <a class="sidebar-nav-item" href="{% url 'methodist_applications' %}">
-                <span class="sidebar-nav-icon">📝</span> Заявки
+                Заявки
             </a>
             <a class="sidebar-nav-item" href="{% url 'methodist_documents' %}">
-                <span class="sidebar-nav-icon">📎</span> Документы
+                Документы
             </a>
             <a class="sidebar-nav-item" href="{% url 'exam_result_create' %}">
-                <span class="sidebar-nav-icon">🏆</span> Внести результат
+                Внести результат
             </a>
             <a class="sidebar-nav-item" href="{% url 'methodist_templates' %}">
-                <span class="sidebar-nav-icon">📄</span> Шаблоны
+                Шаблоны
             </a>
             <div class="sidebar-sep"></div>
             <div class="sidebar-section-label">Экспорт</div>
             <a class="sidebar-nav-item" href="{% url 'export_applications_xlsx' %}">
-                <span class="sidebar-nav-icon">📥</span> Выгрузка XLSX
+                Выгрузка XLSX
             </a>
             <a class="sidebar-nav-item" href="{% url 'profile_edit' %}">
-                <span class="sidebar-nav-icon">⚙</span> Профиль
+                Профиль
             </a>
             <a class="sidebar-nav-item" href="{% url 'logout' %}">
-                <span class="sidebar-nav-icon">🚪</span> Выйти
+                Выйти
             </a>
 
         {% else %}
             <div class="sidebar-section-label">Мой кабинет</div>
             <a class="sidebar-nav-item" href="{% url 'applicant_dashboard' %}">
-                <span class="sidebar-nav-icon">📊</span> Обзор
+                Обзор
             </a>
             <a class="sidebar-nav-item" href="{% url 'applicant_applications' %}">
-                <span class="sidebar-nav-icon">📝</span> Мои заявки
+                Мои заявки
             </a>
             <a class="sidebar-nav-item" href="{% url 'application_create' %}">
-                <span class="sidebar-nav-icon">➕</span> Новая заявка
+                Новая заявка
             </a>
             <a class="sidebar-nav-item" href="{% url 'applicant_documents' %}">
-                <span class="sidebar-nav-icon">📎</span> Документы
+                Документы
             </a>
             <a class="sidebar-nav-item" href="{% url 'applicant_results' %}">
-                <span class="sidebar-nav-icon">🏆</span> Результаты
+                Результаты
             </a>
             <div class="sidebar-sep"></div>
             <div class="sidebar-section-label">Настройки</div>
             <a class="sidebar-nav-item" href="{% url 'profile_edit' %}">
-                <span class="sidebar-nav-icon">⚙</span> Профиль
+                Профиль
             </a>
             <a class="sidebar-nav-item" href="{% url 'logout' %}">
-                <span class="sidebar-nav-icon">🚪</span> Выйти
+                Выйти
             </a>
         {% endif %}
     </nav>

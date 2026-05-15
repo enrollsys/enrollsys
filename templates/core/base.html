@@ -5,25 +5,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Онлайн-сервис Управления по организации приема Московского университета имени С.Ю. Витте">
-    <title>{% if page_title %}{{ page_title }} — {% endif %}Витте Прием</title>
+    <title>{% if page_title %}{{ page_title }} — {% endif %}Управление организацией приема</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f6d7a'/><text x='16' y='23' font-size='20' font-weight='900' text-anchor='middle' fill='white' font-family='Arial'>В</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f6d7a'/><text x='16' y='23' font-size='20' font-weight='900' text-anchor='middle' fill='white' font-family='Arial'>У</text></svg>">
 </head>
 <body>
 
     <!-- ── Top Strip ── -->
     <div class="top-strip">
         <div class="top-strip-left">
-            <span>🏛 ЧОУВО «Московский университет имени С.Ю. Витте»</span>
+            <span>ЧОУВО «Московский университет имени С.Ю. Витте»</span>
             <span class="top-strip-sep"></span>
             <span>Управление по организации приема</span>
         </div>
         <div class="top-strip-right">
-            <a href="tel:+74957803992">📞 +7 (495) 780-39-92</a>
+            <a href="tel:+74957803992">+7 (495) 780-39-92</a>
             <span class="top-strip-sep"></span>
-            <a href="mailto:priem@muiv.ru">✉ priem@muiv.ru</a>
+            <a href="mailto:priem@muiv.ru">priem@muiv.ru</a>
         </div>
     </div>
 
@@ -32,10 +32,10 @@
         <div class="header-inner">
 
             <!-- Brand -->
-            <a class="brand" href="{% url 'home' %}" aria-label="Витте Прием — на главную">
-                <div class="brand-logo">В</div>
+            <a class="brand" href="{% url 'home' %}" aria-label="Управление организацией приема — на главную">
+                <div class="brand-logo">У</div>
                 <div class="brand-text">
-                    <span class="brand-name">Витте&nbsp;Прием</span>
+                    <span class="brand-name">Управление организацией приема</span>
                     <span class="brand-sub">онлайн-сервис для абитуриентов</span>
                 </div>
             </a>
@@ -54,23 +54,23 @@
                     </a>
                     <div class="nav-dropdown">
                         <a href="{% url 'program_list' %}">
-                            <span class="dd-icon">📚</span> Направления обучения
+                            Направления обучения
                         </a>
                         <a href="{% url 'faculty_list' %}">
-                            <span class="dd-icon">🏛</span> Факультеты
+                            Факультеты
                         </a>
                         <a href="{% url 'campaign_list' %}">
-                            <span class="dd-icon">📅</span> Приемная кампания
+                            Приемная кампания
                         </a>
                         <div class="nav-divider"></div>
                         <a href="{% url 'admission_rules' %}">
-                            <span class="dd-icon">📋</span> Правила приема
+                            Правила приема
                         </a>
                         <a href="{% url 'admission_schedule' %}">
-                            <span class="dd-icon">🗓</span> Сроки и расписание
+                            Сроки и расписание
                         </a>
                         <a href="{% url 'admission_documents' %}">
-                            <span class="dd-icon">📄</span> Документы
+                            Документы
                         </a>
                     </div>
                 </div>
@@ -101,11 +101,11 @@
                             {{ user.username|first|upper }}
                         </div>
                         {% if current_role == 'admin' %}
-                            <a class="btn btn-secondary btn-sm" href="{% url 'admin_dashboard' %}">⚙ Панель</a>
+                            <a class="btn btn-secondary btn-sm" href="{% url 'admin_dashboard' %}">Панель</a>
                         {% elif current_role == 'methodist' %}
-                            <a class="btn btn-secondary btn-sm" href="{% url 'methodist_dashboard' %}">📋 Кабинет</a>
+                            <a class="btn btn-secondary btn-sm" href="{% url 'methodist_dashboard' %}">Кабинет</a>
                         {% else %}
-                            <a class="btn btn-secondary btn-sm" href="{% url 'applicant_dashboard' %}">👤 Кабинет</a>
+                            <a class="btn btn-secondary btn-sm" href="{% url 'applicant_dashboard' %}">Кабинет</a>
                         {% endif %}
                         <a class="btn btn-outline btn-sm" href="{% url 'logout' %}">Выйти</a>
                     </div>
@@ -150,9 +150,9 @@
                 <!-- Brand column -->
                 <div class="footer-col">
                     <div class="footer-brand">
-                        <div class="footer-logo">В</div>
+                        <div class="footer-logo">У</div>
                         <div>
-                            <span class="footer-brand-name">Витте Прием</span>
+                            <span class="footer-brand-name">Управление организацией приема</span>
                             <span class="footer-brand-sub">онлайн-сервис</span>
                         </div>
                     </div>
@@ -166,35 +166,35 @@
                 <!-- Поступление -->
                 <div class="footer-col">
                     <h4>Поступление</h4>
-                    <a href="{% url 'program_list' %}">📚 Направления</a>
-                    <a href="{% url 'faculty_list' %}">🏛 Факультеты</a>
-                    <a href="{% url 'campaign_list' %}">📅 Приемная кампания</a>
-                    <a href="{% url 'admission_rules' %}">📋 Правила приема</a>
-                    <a href="{% url 'admission_schedule' %}">🗓 Сроки</a>
-                    <a href="{% url 'admission_documents' %}">📄 Документы</a>
+                    <a href="{% url 'program_list' %}">Направления</a>
+                    <a href="{% url 'faculty_list' %}">Факультеты</a>
+                    <a href="{% url 'campaign_list' %}">Приемная кампания</a>
+                    <a href="{% url 'admission_rules' %}">Правила приема</a>
+                    <a href="{% url 'admission_schedule' %}">Сроки</a>
+                    <a href="{% url 'admission_documents' %}">Документы</a>
                 </div>
 
                 <!-- Информация -->
                 <div class="footer-col">
                     <h4>Информация</h4>
-                    <a href="{% url 'about' %}">ℹ О сервисе</a>
-                    <a href="{% url 'news_list' %}">📰 Новости</a>
-                    <a href="{% url 'faq_list' %}">❓ FAQ</a>
-                    <a href="{% url 'contact_list' %}">📞 Контакты</a>
+                    <a href="{% url 'about' %}">О сервисе</a>
+                    <a href="{% url 'news_list' %}">Новости</a>
+                    <a href="{% url 'faq_list' %}">FAQ</a>
+                    <a href="{% url 'contact_list' %}">Контакты</a>
                 </div>
 
                 <!-- Кабинет -->
                 <div class="footer-col">
                     <h4>Личный кабинет</h4>
-                    <a href="{% url 'login' %}">🔑 Вход</a>
-                    <a href="{% url 'register' %}">✍ Регистрация</a>
+                    <a href="{% url 'login' %}">Вход</a>
+                    <a href="{% url 'register' %}">Регистрация</a>
                     {% if user.is_authenticated %}
                         {% if current_role == 'admin' %}
-                            <a href="{% url 'admin_dashboard' %}">⚙ Панель администратора</a>
+                            <a href="{% url 'admin_dashboard' %}">Панель администратора</a>
                         {% elif current_role == 'methodist' %}
-                            <a href="{% url 'methodist_dashboard' %}">📋 Кабинет методиста</a>
+                            <a href="{% url 'methodist_dashboard' %}">Кабинет методиста</a>
                         {% else %}
-                            <a href="{% url 'applicant_dashboard' %}">👤 Кабинет абитуриента</a>
+                            <a href="{% url 'applicant_dashboard' %}">Кабинет абитуриента</a>
                         {% endif %}
                     {% endif %}
                 </div>
